@@ -434,9 +434,20 @@ export class Game {
   private render(): void {
     this.display.clear();
 
-    // Render map
-    for (let y = 0; y < MAP_ROWS; y++) {
-      for (let x = 0; x < COLS; x++) {
+    // Center camera on player
+    this.display.centerOn(this.player.x, this.player.y, COLS, MAP_ROWS);
+
+    // Get viewport bounds for efficient rendering
+    const viewport = this.display.getViewportSize();
+    const camera = this.display.getCameraPosition();
+    const startX = camera.x;
+    const startY = camera.y;
+    const endX = Math.min(startX + viewport.cols, COLS);
+    const endY = Math.min(startY + viewport.rows, MAP_ROWS);
+
+    // Render only visible portion of map
+    for (let y = startY; y < endY; y++) {
+      for (let x = startX; x < endX; x++) {
         const tile = this.level.getTile(x, y);
         if (!tile) continue;
 
@@ -451,27 +462,27 @@ export class Game {
 
         if (isVisible) {
           if (monster) {
-            this.display.draw(x, y, monster.char, monster.color, '#000');
+            this.display.drawWorld(x, y, monster.char, monster.color, '#000');
           } else if (items.length > 0) {
             const topItem = items[items.length - 1];
-            this.display.draw(x, y, topItem.char, topItem.color, '#000');
+            this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');
           } else {
-            this.display.draw(x, y, getTileChar(tile), getTileColor(tile), '#000');
+            this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), '#000');
           }
         } else {
           // Explored but not visible - show in darker color
-          this.display.draw(x, y, getTileChar(tile), '#333', '#000');
+          this.display.drawWorld(x, y, getTileChar(tile), '#333', '#000');
         }
       }
     }
 
     // Render player
-    this.display.draw(this.player.x, this.player.y, '@', '#fff', '#000');
+    this.display.drawWorld(this.player.x, this.player.y, '@', '#fff', '#000');
 
     // Render status bar
     const hungerStatus = this.player.hunger < 50 ? ' Weak' : this.player.hunger < 150 ? ' Hungry' : '';
     this.statusBar.innerHTML = `
-      <span>Level:${this.currentLevelNum} HP:${this.player.hp}/${this.player.maxHp} Str:${this.player.strength} AC:${this.player.armor} Exp:${this.player.level}/${this.player.exp}${hungerStatus}</span>
+      <span>Lv:${this.currentLevelNum} HP:${this.player.hp}/${this.player.maxHp} Str:${this.player.strength} AC:${this.player.armor} Exp:${this.player.level}/${this.player.exp}${hungerStatus}</span>
       <span>Gold:${this.player.gold}</span>
     `;
   }
