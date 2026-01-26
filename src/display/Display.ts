@@ -24,11 +24,15 @@ export class Display {
     const dpr = window.devicePixelRatio || 1;
     const renderFontSize = Math.round(this.logicalFontSize * dpr);
 
+    // Use specific fonts known for crisp rendering
+    const fontStack = '"Courier New", Courier, "Lucida Console", Monaco, monospace';
+
     this.rotDisplay = new ROT.Display({
       width: VIEWPORT_COLS,
       height: VIEWPORT_ROWS,
       fontSize: renderFontSize,
-      fontFamily: 'monospace',
+      fontFamily: fontStack,
+      fontStyle: 'normal',
       forceSquareRatio: true,
       bg: '#111',
     });
@@ -37,6 +41,8 @@ export class Display {
     if (canvas) {
       // Scale canvas back down with CSS for crisp rendering
       this.applyCanvasScaling(canvas, dpr);
+      // Disable image smoothing for sharper text
+      this.disableSmoothing(canvas);
       container.appendChild(canvas);
     }
 
@@ -49,6 +55,13 @@ export class Display {
     const height = canvas.height / dpr;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
+  }
+
+  private disableSmoothing(canvas: HTMLCanvasElement): void {
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.imageSmoothingEnabled = false;
+    }
   }
 
   private calculateFontSize(): number {
@@ -74,6 +87,7 @@ export class Display {
     const canvas = this.rotDisplay.getContainer() as HTMLCanvasElement;
     if (canvas) {
       this.applyCanvasScaling(canvas, dpr);
+      this.disableSmoothing(canvas);
     }
   }
 
