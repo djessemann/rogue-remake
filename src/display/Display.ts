@@ -1,8 +1,9 @@
 import * as ROT from 'rot-js';
 
-// Viewport size (what the player sees) - smaller for zoomed-in view
-const VIEWPORT_COLS = 25;
-const VIEWPORT_ROWS = 15;
+// Viewport size - smaller viewport = larger characters
+// 20x12 gives a nice zoomed-in feel on mobile
+const VIEWPORT_COLS = 20;
+const VIEWPORT_ROWS = 12;
 
 export class Display {
   private rotDisplay: ROT.Display;
@@ -38,12 +39,12 @@ export class Display {
     const availableWidth = displayEl.clientWidth || window.innerWidth;
     const availableHeight = displayEl.clientHeight || window.innerHeight * 0.4;
 
+    // Calculate optimal font size to fill available space
     const fontByWidth = Math.floor(availableWidth / VIEWPORT_COLS);
     const fontByHeight = Math.floor(availableHeight / VIEWPORT_ROWS);
 
-    // Calculate base size, then apply 15% zoom for better visibility
-    const baseSize = Math.min(fontByWidth, fontByHeight, 32);
-    return Math.max(18, Math.floor(baseSize * 1.15));
+    // Clamp between reasonable min/max values
+    return Math.max(16, Math.min(fontByWidth, fontByHeight, 40));
   }
 
   private handleResize(): void {
