@@ -19,6 +19,8 @@ export interface Player {
   inventory: Item[];
   weapon: Item | null;
   wornArmor: Item | null;
+  rings: [Item | null, Item | null];
+  hasAmulet: boolean;
 }
 
 export function createPlayer(x: number, y: number): Player {
@@ -40,6 +42,8 @@ export function createPlayer(x: number, y: number): Player {
     inventory: [],
     weapon: null,
     wornArmor: null,
+    rings: [null, null],
+    hasAmulet: false,
   };
 }
 
@@ -50,7 +54,7 @@ export function addExp(player: Player, amount: number): boolean {
     player.level++;
     const hpGain = Math.floor(Math.random() * 8) + 2; // 2-9 HP
     player.maxHp += hpGain;
-    player.hp += hpGain;
+    player.hp = player.maxHp; // Full HP restore on level up!
     return true; // Level up!
   }
   return false;

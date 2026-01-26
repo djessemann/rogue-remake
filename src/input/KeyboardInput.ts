@@ -34,19 +34,16 @@ export class KeyboardInput {
     b: 'SW',
     j: 'S',
     n: 'SE',
-    // WASD (4-directional)
-    w: 'N',
-    a: 'W',
-    s: 'S',
-    d: 'E',
   };
 
   private actionMap: Record<string, Action> = {
     i: 'inventory',
-    ',': 'pickup',
+    p: 'pickup',
+    ',': 'pickup', // Alternative
     g: 'pickup', // Alternative
-    '.': 'wait',
-    ' ': 'wait',
+    w: 'wait',
+    '.': 'wait', // Alternative
+    ' ': 'wait', // Alternative
     '<': 'stairs_up',
     '>': 'stairs_down',
     '?': 'help',

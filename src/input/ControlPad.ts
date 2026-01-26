@@ -71,8 +71,8 @@ export class ControlPad {
   private createActionBar(): void {
     const actions: { label: string; action: Action }[] = [
       { label: 'I', action: 'inventory' },
-      { label: ',', action: 'pickup' },
-      { label: '.', action: 'wait' },
+      { label: 'P', action: 'pickup' },
+      { label: 'W', action: 'wait' },
       { label: '<', action: 'stairs_up' },
       { label: '>', action: 'stairs_down' },
       { label: '?', action: 'help' },

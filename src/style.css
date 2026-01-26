@@ -219,3 +219,139 @@ html, body {
 #help-modal p {
   margin-bottom: 8px;
 }
+
+/* Game Over Modal */
+#gameover-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 200;
+  padding: 32px 16px;
+  overflow-y: auto;
+  text-align: center;
+}
+
+#gameover-modal.open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#gameover-modal h2 {
+  color: #f44;
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+#gameover-modal .death-reason {
+  color: var(--highlight-color);
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+#gameover-modal .stats {
+  margin-bottom: 24px;
+}
+
+#gameover-modal .stats p {
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+#gameover-modal .restart-btn {
+  padding: 12px 32px;
+  font-size: 18px;
+  font-family: monospace;
+  background-color: #2a2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#gameover-modal .restart-btn:active {
+  background-color: #383;
+}
+
+/* Victory Modal */
+#victory-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 200;
+  padding: 32px 16px;
+  overflow-y: auto;
+  text-align: center;
+}
+
+#victory-modal.open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#victory-modal h2 {
+  color: #fd0;
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+#victory-modal .victory-text {
+  color: var(--highlight-color);
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+#victory-modal .stats {
+  margin-bottom: 24px;
+}
+
+#victory-modal .stats p {
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+#victory-modal .restart-btn {
+  padding: 12px 32px;
+  font-size: 18px;
+  font-family: monospace;
+  background-color: #2a2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Inventory enhancements */
+.inventory-hint {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+#inventory-list li {
+  cursor: default;
+}
+
+#inventory-list li.item-row {
+  cursor: pointer;
+}
+
+#inventory-list li.item-row:hover {
+  background-color: #333;
+}
+
+#inventory-list li.equipped {
+  color: #888;
+}
