@@ -1,5 +1,5 @@
 export type Direction = 'NW' | 'N' | 'NE' | 'W' | 'WAIT' | 'E' | 'SW' | 'S' | 'SE';
-export type Action = 'inventory' | 'pickup' | 'wait' | 'stairs_up' | 'stairs_down' | 'help';
+export type Action = 'inventory' | 'pickup' | 'wait' | 'stairs' | 'help';
 
 export interface ControlPadCallbacks {
   onDirection: (dir: Direction) => void;
@@ -73,8 +73,7 @@ export class ControlPad {
       { label: 'I', action: 'inventory' },
       { label: 'P', action: 'pickup' },
       { label: 'W', action: 'wait' },
-      { label: '<', action: 'stairs_up' },
-      { label: '>', action: 'stairs_down' },
+      { label: 'S', action: 'stairs' },
       { label: '?', action: 'help' },
     ];
 

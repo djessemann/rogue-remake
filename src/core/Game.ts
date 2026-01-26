@@ -247,11 +247,8 @@ export class Game {
       case 'wait':
         this.endTurn();
         break;
-      case 'stairs_up':
-        this.useStairs('up');
-        break;
-      case 'stairs_down':
-        this.useStairs('down');
+      case 'stairs':
+        this.useStairsAuto();
         break;
       case 'help':
         this.showHelp();
@@ -311,6 +308,17 @@ export class Game {
     }
 
     this.endTurn();
+  }
+
+  private useStairsAuto(): void {
+    const tile = this.level.getTile(this.player.x, this.player.y);
+    if (tile?.type === 'stairs_down') {
+      this.useStairs('down');
+    } else if (tile?.type === 'stairs_up') {
+      this.useStairs('up');
+    } else {
+      this.addMessage('There are no stairs here.');
+    }
   }
 
   private useStairs(direction: 'up' | 'down'): void {
@@ -665,8 +673,7 @@ export class Game {
         <p>I - Inventory</p>
         <p>P - Pick up item</p>
         <p>W - Wait one turn</p>
-        <p>&lt; - Go up stairs</p>
-        <p>&gt; - Go down stairs</p>
+        <p>S - Use stairs</p>
         <p>? - This help</p>
         <p><strong>Keyboard:</strong> Arrow keys, numpad, or vi keys (hjkl) for movement.</p>
         <p><strong>Combat:</strong> Move into monsters to attack.</p>

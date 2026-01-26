@@ -44,8 +44,9 @@ export class KeyboardInput {
     w: 'wait',
     '.': 'wait', // Alternative
     ' ': 'wait', // Alternative
-    '<': 'stairs_up',
-    '>': 'stairs_down',
+    s: 'stairs',
+    '<': 'stairs',
+    '>': 'stairs',
     '?': 'help',
   };
 
