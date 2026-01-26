@@ -48,6 +48,7 @@ html, body {
   justify-content: center;
   overflow: hidden;
   min-height: 0;
+  max-height: 45vh;
 }
 
 #display canvas {

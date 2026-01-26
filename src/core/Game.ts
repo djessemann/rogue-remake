@@ -75,7 +75,7 @@ export class Game {
     this.spawnEntities();
 
     // Add welcome message
-    this.addMessage("Welcome to Babo's Basement!");
+    this.addMessage("Welcome to Rogue's Gallery!");
 
     // Initial render
     this.computeFOV();
@@ -298,7 +298,7 @@ export class Game {
     } else if (item.type === 'amulet') {
       this.player.hasAmulet = true;
       this.level.removeItem(this.player.x, this.player.y, item);
-      this.addMessage('You pick up the Glowing Goblet! Now escape the basement!');
+      this.addMessage('You pick up the Glowing Goblet! Now escape the gallery!');
     } else {
       // Add to inventory
       if (this.player.inventory.length < 23) {
@@ -660,7 +660,7 @@ export class Game {
       modal.innerHTML = `
         <button class="close-btn">&times;</button>
         <h2>How to Play</h2>
-        <p><strong>Goal:</strong> Descend through the basement, find the Glowing Goblet, and return to the surface.</p>
+        <p><strong>Goal:</strong> Descend through the gallery, find the Glowing Goblet, and return to the surface.</p>
         <p><strong>D-Pad:</strong> Move in 8 directions. Center button waits.</p>
         <p><strong>Action Buttons:</strong></p>
         <p>I - Inventory</p>
@@ -723,7 +723,7 @@ export class Game {
 
     modal.innerHTML = `
       <h2>Victory!</h2>
-      <p class="victory-text">You have retrieved the Glowing Goblet and escaped the basement!</p>
+      <p class="victory-text">You have retrieved the Glowing Goblet and escaped Rogue's Gallery!</p>
       <div class="stats">
         <p>Character Level: ${this.player.level}</p>
         <p>Gold Collected: ${this.player.gold}</p>
@@ -762,7 +762,7 @@ export class Game {
     this.spawnEntities();
 
     // Welcome message
-    this.addMessage("Welcome to Babo's Basement!");
+    this.addMessage("Welcome to Rogue's Gallery!");
 
     // Render
     this.computeFOV();
