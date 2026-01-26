@@ -672,7 +672,6 @@ export class Game {
         <p><strong>Action Buttons:</strong></p>
         <p>I - Inventory</p>
         <p>P - Pick up item</p>
-        <p>W - Wait one turn</p>
         <p>S - Use stairs</p>
         <p>? - This help</p>
         <p><strong>Keyboard:</strong> Arrow keys, numpad, or vi keys (hjkl) for movement.</p>
@@ -842,7 +841,7 @@ export class Game {
     // Render status bar
     const hungerStatus = this.player.hunger < 50 ? ' Weak' : this.player.hunger < 150 ? ' Hungry' : '';
     this.statusBar.innerHTML = `
-      <span>Lv:${this.currentLevelNum} HP:${this.player.hp}/${this.player.maxHp} Str:${this.player.strength} AC:${this.player.armor} Exp:${this.player.level}/${this.player.exp}${hungerStatus}</span>
+      <span>Lv:${this.currentLevelNum} HP:${this.player.hp}/${this.player.maxHp} Str:${this.player.strength} Def:${this.player.armor} Exp:${this.player.level}/${this.player.exp}${hungerStatus}</span>
       <span>Gold:${this.player.gold}</span>
     `;
   }

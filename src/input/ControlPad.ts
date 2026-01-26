@@ -72,7 +72,6 @@ export class ControlPad {
     const actions: { label: string; action: Action }[] = [
       { label: 'I', action: 'inventory' },
       { label: 'P', action: 'pickup' },
-      { label: 'W', action: 'wait' },
       { label: 'S', action: 'stairs' },
       { label: '?', action: 'help' },
     ];
