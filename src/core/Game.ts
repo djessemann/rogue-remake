@@ -830,7 +830,7 @@ export class Game {
     }
 
     // Render player
-    this.display.drawWorld(this.player.x, this.player.y, '@', '#e0e0f0', '#000');
+    this.display.drawWorld(this.player.x, this.player.y, '@', '#ffffff', '#000');
 
     // Render status bar
     const hungerStatus = this.player.hunger < 50 ? ' Weak' : this.player.hunger < 150 ? ' Hungry' : '';

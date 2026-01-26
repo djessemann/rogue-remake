@@ -119,11 +119,11 @@ export function initializeItemAppearances(): ItemAppearances {
   };
 }
 
-// Item effect colors - Pastel palette
+// Item effect colors - Bright saturated palette
 const POTION_DISPLAY_COLORS: Record<string, string> = {
-  red: '#f0a0a0', blue: '#a0a0f0', green: '#a0f0a0', yellow: '#f0f0a0', orange: '#f0c0a0',
-  purple: '#c0a0f0', white: '#f0f0f0', black: '#606060', brown: '#c0a080', pink: '#f0b0c0',
-  grey: '#a0a0a0', clear: '#c0f0f0', murky: '#908070', golden: '#f0d090', silver: '#d0d0e0'
+  red: '#ff3333', blue: '#3366ff', green: '#33ff33', yellow: '#ffff33', orange: '#ff8833',
+  purple: '#aa33ff', white: '#ffffff', black: '#666666', brown: '#cc6633', pink: '#ff66aa',
+  grey: '#999999', clear: '#66ffff', murky: '#886644', golden: '#ffcc00', silver: '#ccccff'
 };
 
 // === GOLD ===
@@ -133,7 +133,7 @@ export function createGold(x: number, y: number, levelNum: number): Item {
     type: 'gold',
     name: `${value} gold pieces`,
     char: '*',
-    color: '#f0e090',
+    color: '#ffdd00',
     x,
     y,
     value,
@@ -146,7 +146,7 @@ export function createFood(x: number, y: number): Item {
     type: 'food',
     name: 'some food',
     char: ':',
-    color: '#d0a080',
+    color: '#cc6633',
     x,
     y,
     value: 1,
@@ -159,7 +159,7 @@ export function createWeapon(x: number, y: number, name: string, bonus: number =
     type: 'weapon',
     name: bonus !== 0 ? `${bonus > 0 ? '+' : ''}${bonus} ${name}` : name,
     char: ')',
-    color: '#a0c0e0',
+    color: '#33aaff',
     x,
     y,
     value: 0,
@@ -173,7 +173,7 @@ export function createArmor(x: number, y: number, name: string, bonus: number = 
     type: 'armor',
     name: bonus !== 0 ? `${bonus > 0 ? '+' : ''}${bonus} ${name}` : name,
     char: '[',
-    color: '#a0c0e0',
+    color: '#33aaff',
     x,
     y,
     value: bonus,
@@ -222,7 +222,7 @@ export function createScroll(x: number, y: number, effect: ScrollEffect, appeara
     type: 'scroll',
     name: identified ? `scroll of ${formatEffectName(effect)}` : `scroll titled "${title}"`,
     char: '?',
-    color: '#f0f0e0',
+    color: '#ffffff',
     x,
     y,
     value: 0,
@@ -263,7 +263,7 @@ export function createRing(x: number, y: number, effect: RingEffect, appearances
     type: 'ring',
     name,
     char: '=',
-    color: '#f0c090',
+    color: '#ff8800',
     x,
     y,
     value: 0,
@@ -290,7 +290,7 @@ export function createWand(x: number, y: number, effect: WandEffect, appearances
     type: 'wand',
     name: identified ? `wand of ${formatEffectName(effect)}` : `${material} wand`,
     char: '/',
-    color: '#c0f0a0',
+    color: '#88ff00',
     x,
     y,
     value: 0,
@@ -312,7 +312,7 @@ export function createAmulet(x: number, y: number): Item {
     type: 'amulet',
     name: 'The Glowing Goblet',
     char: 'U',
-    color: '#f0d090',
+    color: '#ffcc00',
     x,
     y,
     value: 0,
