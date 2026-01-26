@@ -357,3 +357,23 @@ html, body {
 #inventory-list li.equipped {
   color: #888;
 }
+
+/* Modal close button at bottom */
+.modal-close-btn {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 20px auto 0;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-family: monospace;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-close-btn:active {
+  background-color: #444;
+}

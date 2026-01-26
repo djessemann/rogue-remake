@@ -415,13 +415,13 @@ export class Game {
     }
 
     modal.innerHTML = `
-      <button class="close-btn">&times;</button>
       <h2>Inventory</h2>
       <p class="inventory-hint">Tap an item to use it</p>
       <ul id="inventory-list"></ul>
+      <button class="modal-close-btn">Close</button>
     `;
 
-    modal.querySelector('.close-btn')!.addEventListener('click', () => {
+    modal.querySelector('.modal-close-btn')!.addEventListener('click', () => {
       modal!.classList.remove('open');
     });
 
@@ -658,7 +658,6 @@ export class Game {
       modal = document.createElement('div');
       modal.id = 'help-modal';
       modal.innerHTML = `
-        <button class="close-btn">&times;</button>
         <h2>How to Play</h2>
         <p><strong>Goal:</strong> Descend through the gallery, find the Glowing Goblet, and return to the surface.</p>
         <p><strong>D-Pad:</strong> Move in 8 directions. Center button waits.</p>
@@ -672,10 +671,11 @@ export class Game {
         <p><strong>Keyboard:</strong> Arrow keys, numpad, or vi keys (hjkl) for movement.</p>
         <p><strong>Combat:</strong> Move into monsters to attack.</p>
         <p><strong>Food:</strong> Restores hunger and 25% HP.</p>
+        <button class="modal-close-btn">Close</button>
       `;
       document.body.appendChild(modal);
 
-      modal.querySelector('.close-btn')!.addEventListener('click', () => {
+      modal.querySelector('.modal-close-btn')!.addEventListener('click', () => {
         modal!.classList.remove('open');
       });
     }

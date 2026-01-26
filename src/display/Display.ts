@@ -22,7 +22,7 @@ export class Display {
       fontSize,
       fontFamily: 'monospace',
       forceSquareRatio: true,
-      bg: '#000',
+      bg: '#111',
     });
 
     const canvas = this.rotDisplay.getContainer();
@@ -41,8 +41,8 @@ export class Display {
     const fontByWidth = Math.floor(availableWidth / VIEWPORT_COLS);
     const fontByHeight = Math.floor(availableHeight / VIEWPORT_ROWS);
 
-    // Use larger font for better visibility on mobile
-    return Math.max(12, Math.min(fontByWidth, fontByHeight, 24));
+    // Use larger font for better visibility on mobile (20% zoom)
+    return Math.max(14, Math.min(fontByWidth, fontByHeight, 29));
   }
 
   private handleResize(): void {
