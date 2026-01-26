@@ -54,16 +54,16 @@ export function applyPotionEffect(
       return { message: restored > 0 ? `You feel your strength return! (+${restored} Str)` : 'You feel warm for a moment.', success: true };
     }
     case 'confusion': {
-      // TODO: Add confusion status effect
-      return { message: 'You feel confused...', success: true };
+      player.status.confused = 10 + Math.floor(Math.random() * 10); // 10-19 turns
+      return { message: 'You feel confused! Your movements are disoriented.', success: true };
     }
     case 'blindness': {
-      // TODO: Add blindness status effect
-      return { message: 'Your vision goes dark!', success: true };
+      player.status.blind = 50 + Math.floor(Math.random() * 50); // 50-99 turns
+      return { message: 'A veil of darkness falls around you!', success: true };
     }
     case 'seeInvisible': {
-      // TODO: Add see invisible status effect
-      return { message: 'Your eyes tingle for a moment.', success: true };
+      player.status.seeInvisible = true;
+      return { message: 'Your eyes tingle! You can see invisible creatures.', success: true };
     }
     case 'levelUp': {
       const hpGain = Math.floor(Math.random() * 8) + 2;
@@ -73,7 +73,7 @@ export function applyPotionEffect(
       return { message: `You feel more experienced! Welcome to level ${player.level}!`, success: true, levelUp: true };
     }
     case 'paralysis': {
-      // TODO: Add paralysis status effect
+      player.status.paralyzed = 2 + Math.floor(Math.random() * 4); // 2-5 turns
       return { message: 'You can\'t move!', success: true };
     }
     default:

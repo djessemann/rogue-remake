@@ -114,21 +114,44 @@ Your weapon's bonus (like +1 mace) also adds to this.
 
 ---
 
+## Status Effects
+
+Your character can be affected by various status conditions:
+
+| Status | Effect | Duration | Source |
+|--------|--------|----------|--------|
+| **Confused** | 50% chance to move in a random direction | 10-19 turns | Potion of Confusion |
+| **Blind** | Can only see the tile you're standing on | 50-99 turns | Potion of Blindness |
+| **Paralyzed** | Cannot move or act | 2-5 turns | Potion of Paralysis |
+| **See Invisible** | Can see invisible monsters | Permanent | Potion of See Invisible |
+
+When an effect wears off, you'll see a message letting you know.
+
+---
+
 ## Monsters
 
 ### Monster List
 
-| Symbol | Name | Color | HP | Armor | XP | First Appears | Behavior |
-|--------|------|-------|-----|-------|-----|---------------|----------|
-| B | Bat | Pink | 1d8 (1-8) | 3 | 1 | Level 1 | Erratic movement |
-| E | Emu | Green | 1d8 (1-8) | 7 | 2 | Level 1 | Normal |
-| H | Hobgoblin | Orange | 1d8 (1-8) | 5 | 3 | Level 1 | Aggressive |
-| I | Ice Monster | Cyan | 1d8 (1-8) | 9 | 5 | Level 1 | Freezes you |
-| K | Kestrel | Yellow | 1d8 (1-8) | 7 | 1 | Level 1 | Erratic movement |
-| O | Orc | Teal | 1d8 (1-8) | 6 | 5 | Level 4 | Greedy |
-| R | Rattlesnake | Lime | 2d8 (2-16) | 3 | 9 | Level 4 | Aggressive |
-| S | Snake | Green | 1d8 (1-8) | 5 | 2 | Level 1 | Aggressive |
-| Z | Zombie | Purple | 2d8 (2-16) | 8 | 6 | Level 5 | Aggressive |
+Monsters have had their HP increased by 20% for added challenge. All monsters now use d10 for HP rolls instead of d8.
+
+| Symbol | Name | Color | HP | Armor | XP | First Appears | Special Abilities |
+|--------|------|-------|-----|-------|-----|---------------|-------------------|
+| B | Bat | Pink | 1d10 (1-10) | 3 | 1 | Level 1 | Erratic movement |
+| E | Emu | Green | 1d10 (1-10) | 7 | 2 | Level 1 | None |
+| H | Hobgoblin | Orange | 1d10 (1-10) | 5 | 3 | Level 1 | Aggressive |
+| I | Ice Monster | Cyan | 1d10 (1-10) | 9 | 5 | Level 1 | Freezes you |
+| K | Kestrel | Yellow | 1d10 (1-10) | 7 | 1 | Level 1 | Erratic movement |
+| S | Snake | Green | 1d10 (1-10) | 5 | 2 | Level 1 | Aggressive |
+| O | Orc | Teal | 1d10 (1-10) | 6 | 5 | Level 4 | Greedy |
+| R | Rattlesnake | Lime | 2d10 (2-20) | 3 | 9 | Level 4 | **Drains Strength** |
+| Z | Zombie | Purple | 2d10 (2-20) | 8 | 6 | Level 5 | Aggressive |
+| A | Aquator | Blue | 2d10 (2-20) | 2 | 15 | Level 8 | **Rusts Armor** |
+| T | Troll | Green | 3d10 (3-30) | 4 | 25 | Level 8 | **Regenerates HP** |
+| P | Phantom | Lavender | 2d10 (2-20) | 3 | 20 | Level 10 | **Invisible** |
+| N | Nymph | Pink | 2d10 (2-20) | 9 | 18 | Level 11 | **Steals Items** |
+| V | Vampire | Red | 3d10 (3-30) | 1 | 40 | Level 13 | **Drains Max HP** |
+| W | Wraith | Gray | 2d10 (2-20) | 4 | 35 | Level 15 | **Drains XP, Invisible** |
 
 ### Monster Damage
 
@@ -143,6 +166,32 @@ Your weapon's bonus (like +1 mace) also adds to this.
 | Orc | 1d8 (1-8) |
 | Zombie | 1d8 (1-8) |
 | Ice Monster | 0 (freezes instead) |
+| Aquator | 0 (rusts armor instead) |
+| Troll | 2d6 (2-12) |
+| Phantom | 1d8 (1-8) |
+| Nymph | 0 (steals items instead) |
+| Vampire | 1d10 (1-10) |
+| Wraith | 1d6 (1-6) |
+
+### Monster Special Abilities
+
+Some monsters have devastating special abilities that trigger when they hit you:
+
+| Ability | Effect | Monster(s) |
+|---------|--------|------------|
+| **Drain Strength** | 30% chance to lose 1 Strength | Rattlesnake |
+| **Rust Armor** | Reduces your armor bonus by 1 | Aquator |
+| **Regenerate** | Heals 1 HP per turn | Troll |
+| **Invisible** | Cannot see unless adjacent or have See Invisible | Phantom, Wraith |
+| **Steal Item** | Steals a random item from inventory and vanishes | Nymph |
+| **Drain Max HP** | 25% chance to permanently lose 1 Max HP | Vampire |
+| **Drain XP** | 20% chance to lose experience points | Wraith |
+
+### Depth Scaling
+
+Monsters become stronger the deeper you go:
+- Monsters gain **+1 HP per 3 dungeon levels** beyond their minimum level
+- Example: A Bat on level 10 has +3 HP (levels 1-3 no bonus, 4-6 +1, 7-9 +2, 10+ +3)
 
 ### Monster Behavior
 
@@ -159,7 +208,16 @@ Your weapon's bonus (like +1 mace) also adds to this.
 
 ## Hunger
 
-You have a hunger counter that starts at **1300**. Every turn (every action you take), it decreases by 1.
+You have a hunger counter that starts at **1300**. Every turn (every action you take), it decreases.
+
+### Depth Scaling
+
+Hunger drains faster on deeper dungeon levels:
+- **Levels 1-9:** -1 hunger per turn
+- **Levels 10-19:** -2 hunger per turn
+- **Levels 20-26:** -3 hunger per turn
+
+This makes food management more critical in the late game!
 
 ### Hunger Stages
 
@@ -218,18 +276,18 @@ Open your inventory with **I** and tap an item to use it:
 
 Potions have randomized colors each game. You won't know what a potion does until you drink it (or use a scroll of identify).
 
-| Effect | Description | Rarity |
-|--------|-------------|--------|
-| Healing | Restores 1-8 HP | Common |
-| Extra Healing | Restores 1-16 HP | Rare |
-| Poison | Deals 1-6 damage, lose 1-3 strength | Uncommon |
-| Strength | Gain 1 strength permanently | Uncommon |
-| Restore Strength | Restore strength to maximum (18) | Uncommon |
-| Confusion | Become confused (no actual effect yet) | Uncommon |
-| Blindness | Become blind (no actual effect yet) | Rare |
-| See Invisible | Can see invisible creatures | Rare |
-| Level Up | Gain one experience level! | Very Rare |
-| Paralysis | Become paralyzed (no actual effect yet) | Rare |
+| Effect | Description |
+|--------|-------------|
+| **Healing** | Restores 33% of max HP |
+| **Extra Healing** | Restores 75% of max HP, may increase max HP by 1 |
+| **Poison** | Deals 25% max HP damage, lose 1 Strength |
+| **Strength** | Gain 1 Strength permanently |
+| **Restore Strength** | Restore Strength to your maximum value |
+| **Confusion** | **Confused for 10-19 turns** - 50% chance to move randomly |
+| **Blindness** | **Blind for 50-99 turns** - can only see your own tile |
+| **See Invisible** | **Permanent** - can see invisible monsters |
+| **Level Up** | Gain one experience level instantly! |
+| **Paralysis** | **Paralyzed for 2-5 turns** - cannot move or act |
 
 ---
 
@@ -239,16 +297,16 @@ Scrolls have randomized titles (like "ABJ CHO") each game.
 
 | Effect | Description |
 |--------|-------------|
-| Identify | Reveals the true nature of one item type |
-| Teleport | Instantly teleport to a random location |
-| Remove Curse | Removes curses from equipped items |
-| Enchant Weapon | Your weapon gains +1 to hit and damage |
-| Enchant Armor | Your armor gains +1 defense |
-| Sleep | Puts nearby monsters to sleep |
-| Scare | Monsters flee from you briefly |
-| Magic Mapping | Reveals the entire level layout |
-| Aggravate | Wakes up all monsters on the level! |
-| Create Monster | Spawns a random monster nearby |
+| **Identify** | Reveals the true nature of one random unidentified item |
+| **Teleport** | Instantly teleport to a random floor tile |
+| **Remove Curse** | Removes curses from all equipped items |
+| **Enchant Weapon** | Your weapon gains +1 to hit and damage |
+| **Enchant Armor** | Your armor gains +1 defense |
+| **Sleep** | Puts nearby monsters to sleep |
+| **Scare** | Monsters flee from you briefly |
+| **Magic Mapping** | Reveals the entire level layout |
+| **Aggravate** | Wakes up ALL monsters on the level! |
+| **Create Monster** | Spawns a random monster adjacent to you |
 
 ---
 
@@ -258,16 +316,16 @@ Rings have randomized gem appearances each game. You can wear up to 2 rings at o
 
 | Effect | Description |
 |--------|-------------|
-| Protection | Adds bonus to your defense |
-| Strength | Adds bonus to your strength |
-| Sustenance | Slows hunger drain |
-| Regeneration | Slowly regenerate HP over time |
-| Slow Digestion | Greatly slows hunger drain |
-| Searching | Better chance to find hidden things |
-| See Invisible | Can see invisible creatures |
-| Stealth | Monsters less likely to wake up |
-| Teleportation | Randomly teleport (usually cursed!) |
-| Dexterity | Bonus to attack accuracy |
+| **Protection** | Adds bonus to your defense |
+| **Strength** | Adds bonus to your strength |
+| **Sustenance** | Slows hunger drain |
+| **Regeneration** | Slowly regenerate HP over time |
+| **Slow Digestion** | Greatly slows hunger drain |
+| **Searching** | Better chance to find hidden things |
+| **See Invisible** | Can see invisible creatures |
+| **Stealth** | Monsters less likely to wake up |
+| **Teleportation** | Randomly teleport (usually cursed!) |
+| **Dexterity** | Bonus to attack accuracy |
 
 ---
 
@@ -277,16 +335,24 @@ Wands have randomized materials (oak, iron, glass, etc.) each game. Each wand ha
 
 | Effect | Damage/Effect |
 |--------|---------------|
-| Magic Missile | 6-12 damage |
-| Lightning | 6-12 damage |
-| Fire | 6-12 damage |
-| Cold | 6-12 damage |
-| Polymorph | Transforms monster into a random creature |
-| Slow | Slows the target monster |
-| Teleport Away | Teleports monster to random location |
-| Cancellation | Removes monster's special abilities |
-| Drain | Halves the monster's current HP |
-| Light | Illuminates the room |
+| **Magic Missile** | 6-12 reliable single-target damage |
+| **Lightning** | 10 damage, **chains to up to 2 nearby enemies** (60% damage each chain) |
+| **Fire** | 8-16 damage, **highest single-target damage** |
+| **Cold** | 4-8 damage, **freezes the target** (puts to sleep) |
+| **Polymorph** | Transforms monster into a random creature |
+| **Slow** | Slows the target monster |
+| **Teleport Away** | Teleports monster to random location on the level |
+| **Cancellation** | Removes monster's special abilities |
+| **Drain** | Halves the monster's current HP |
+| **Light** | Illuminates the current room |
+
+### Wand Strategy Tips
+
+- **Fire** is best for single tough enemies (bosses, vampires)
+- **Lightning** is excellent against groups of enemies
+- **Cold** is great for neutralizing dangerous monsters temporarily
+- **Teleport Away** can save your life against late-game threats
+- **Drain** is very effective against high-HP monsters like Trolls
 
 ---
 
@@ -323,10 +389,11 @@ Each level is randomly generated with:
 
 ### Field of View
 
-- You can see **10 tiles** in all directions
+- You can see **10 tiles** in all directions (unless blind)
 - Walls and doors block your vision
 - Areas you've explored stay visible (but darker) even when out of sight
 - Monsters are only visible when in your line of sight
+- **Invisible monsters** can only be seen when adjacent or if you have See Invisible
 
 ---
 
@@ -391,20 +458,52 @@ Additional status indicators:
 ## Tips for Survival
 
 1. **Don't rush** - Take your time to explore each level
-2. **Watch your hunger** - Eat food before you're starving
-3. **Identify potions carefully** - Some are harmful!
+2. **Watch your hunger** - Eat food before you're starving (especially deep in the dungeon!)
+3. **Identify potions carefully** - Confusion, blindness, and paralysis can be deadly
 4. **Save scrolls of identify** - Use them on rings and wands
 5. **Use corridors** - Fight monsters in narrow spaces so they can't surround you
 6. **Level up** - The full HP restore from leveling is huge
-7. **Wands are powerful** - Save them for tough situations
+7. **Wands are powerful** - Save Fire wands for Vampires and Trolls
 8. **Watch for cursed rings** - Teleportation rings are usually cursed
+9. **Beware invisible monsters** - Phantoms and Wraiths can attack unseen!
+10. **Protect your armor** - Aquators can permanently weaken your defense
+11. **Carry Restore Strength potions** - Rattlesnakes can cripple you with strength drain
 
 ---
 
-## What's Coming Next
+## Dangerous Monster Strategies
 
-Future updates may include:
-- **More monsters** - All 26 letters of the alphabet
-- **Save/Load** - Continue your adventure later
-- **More item effects** - Confusion, blindness, paralysis mechanics
-- **Special rooms** - Treasure rooms, monster zoos
+### Rattlesnake (Level 4+)
+- Drains strength on hit - can make you very weak
+- Keep Restore Strength potions handy
+
+### Aquator (Level 8+)
+- Rusts your armor permanently
+- Try to kill quickly with wands or avoid entirely
+
+### Troll (Level 8+)
+- Regenerates HP every turn
+- Must deal burst damage - use Fire wands
+
+### Phantom (Level 10+)
+- Invisible! Use See Invisible potion or be very careful
+- Gets free hits if you can't see it
+
+### Nymph (Level 11+)
+- Steals items and vanishes
+- Kill quickly before it touches you!
+
+### Vampire (Level 13+)
+- Drains your MAX HP permanently
+- Very dangerous - use wands from range
+
+### Wraith (Level 15+)
+- Invisible AND drains experience
+- Most dangerous regular monster - avoid if possible
+
+---
+
+## Version History
+
+- **v1.1** - Added status effects (confusion, blindness, paralysis), 6 new monsters with special abilities, depth scaling, differentiated wand effects, 20% HP increase for all monsters
+- **v1.0** - Initial release

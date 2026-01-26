@@ -1,6 +1,13 @@
 import { PLAYER_START, EXP_LEVELS } from '../constants';
 import type { Item } from './Item';
 
+export interface StatusEffects {
+  confused: number;    // Turns remaining
+  blind: number;       // Turns remaining
+  paralyzed: number;   // Turns remaining
+  seeInvisible: boolean;
+}
+
 export interface Player {
   x: number;
   y: number;
@@ -21,6 +28,7 @@ export interface Player {
   wornArmor: Item | null;
   rings: [Item | null, Item | null];
   hasAmulet: boolean;
+  status: StatusEffects;
 }
 
 export function createPlayer(x: number, y: number): Player {
@@ -44,6 +52,12 @@ export function createPlayer(x: number, y: number): Player {
     wornArmor: null,
     rings: [null, null],
     hasAmulet: false,
+    status: {
+      confused: 0,
+      blind: 0,
+      paralyzed: 0,
+      seeInvisible: false,
+    },
   };
 }
 

@@ -93,7 +93,7 @@ export class Game {
         if (this.level.isPassable(x, y) && !(x === this.player.x && y === this.player.y)) {
           const def = getMonsterForLevel(this.currentLevelNum);
           if (def) {
-            const monster = createMonster(def, x, y);
+            const monster = createMonster(def, x, y, this.currentLevelNum);
             this.level.addMonster(monster);
           }
         }
@@ -178,6 +178,13 @@ export class Game {
 
   private computeFOV(): void {
     this.visible.clear();
+
+    // If blind, can only see the tile you're standing on
+    if (this.player.status.blind > 0) {
+      this.visible.add(`${this.player.x},${this.player.y}`);
+      return;
+    }
+
     this.fov.compute(this.player.x, this.player.y, 10, (x: number, y: number, _r: number, visibility: number) => {
       if (visibility > 0) {
         this.visible.add(`${x},${y}`);
@@ -189,12 +196,26 @@ export class Game {
   private handleDirection(dir: Direction): void {
     if (this.gameOver) return;
 
-    const [dx, dy] = DIRECTIONS[dir];
+    // Check if paralyzed
+    if (this.player.status.paralyzed > 0) {
+      this.addMessage('You are paralyzed and cannot move!');
+      this.endTurn();
+      return;
+    }
+
+    let [dx, dy] = DIRECTIONS[dir];
 
     if (dx === 0 && dy === 0) {
       // Wait action
       this.endTurn();
       return;
+    }
+
+    // Confusion: 50% chance to move in random direction
+    if (this.player.status.confused > 0 && Math.random() < 0.5) {
+      const dirs = Object.values(DIRECTIONS).filter(([x, y]) => x !== 0 || y !== 0);
+      [dx, dy] = dirs[Math.floor(Math.random() * dirs.length)];
+      this.addMessage('You stumble around confused!');
     }
 
     const newX = this.player.x + dx;
@@ -270,6 +291,50 @@ export class Game {
     }
 
     this.endTurn();
+  }
+
+  private applyMonsterAbility(monster: Monster): void {
+    // Strength drain (Rattlesnake)
+    if (monster.flags.includes('drainStr') && Math.random() < 0.3) {
+      this.player.strength = Math.max(3, this.player.strength - 1);
+      this.addMessage(`The ${monster.name}'s bite weakens you! (-1 Str)`);
+    }
+
+    // Armor rust (Aquator)
+    if (monster.flags.includes('rustArmor') && this.player.wornArmor) {
+      if (this.player.wornArmor.bonus && this.player.wornArmor.bonus > 0) {
+        this.player.wornArmor.bonus--;
+        this.player.armor = Math.max(0, this.player.armor - 1);
+        this.player.wornArmor.name = this.player.wornArmor.bonus > 0
+          ? `+${this.player.wornArmor.bonus} ${this.player.wornArmor.name.replace(/^\+?\d*\s*/, '')}`
+          : this.player.wornArmor.name.replace(/^\+?\d*\s*/, '');
+        this.addMessage(`The ${monster.name} corrodes your armor!`);
+      }
+    }
+
+    // HP drain (Vampire) - permanent max HP loss
+    if (monster.flags.includes('drainHP') && Math.random() < 0.25) {
+      this.player.maxHp = Math.max(1, this.player.maxHp - 1);
+      this.player.hp = Math.min(this.player.hp, this.player.maxHp);
+      this.addMessage(`The ${monster.name} drains your life force! (-1 Max HP)`);
+    }
+
+    // XP drain (Wraith) - can lose levels
+    if (monster.flags.includes('drainXP') && Math.random() < 0.2) {
+      if (this.player.level > 1) {
+        this.player.exp = Math.max(0, this.player.exp - 10);
+        // Check if we should de-level (simplified)
+        this.addMessage(`The ${monster.name} drains your experience!`);
+      }
+    }
+
+    // Item steal (Nymph)
+    if (monster.flags.includes('stealItem') && this.player.inventory.length > 0) {
+      const idx = Math.floor(Math.random() * this.player.inventory.length);
+      const stolen = this.player.inventory.splice(idx, 1)[0];
+      this.addMessage(`The ${monster.name} steals your ${stolen.name} and vanishes!`);
+      this.level.removeMonster(monster);
+    }
   }
 
   private pickupItem(): void {
@@ -370,6 +435,11 @@ export class Game {
     for (const monster of this.level.monsters) {
       if (this.gameOver) break;
 
+      // Regenerating monsters heal
+      if (monster.flags.includes('regenerate') && monster.hp < monster.maxHp) {
+        monster.hp = Math.min(monster.maxHp, monster.hp + 1);
+      }
+
       const move = monsterAct(monster, this.player, this.level);
 
       // Check if monster is adjacent to player - attack
@@ -378,6 +448,12 @@ export class Game {
       if (diagDist <= 1 && !(monster.x === this.player.x && monster.y === this.player.y)) {
         const result = monsterAttack(monster, this.player);
         this.addMessage(result.message);
+
+        // Apply special monster abilities on hit
+        if (result.hit) {
+          this.applyMonsterAbility(monster);
+        }
+
         if (result.killed) {
           this.gameOver = true;
           this.showGameOver('You were slain by the ' + monster.name + '!');
@@ -394,8 +470,29 @@ export class Game {
       }
     }
 
-    // Update hunger
-    this.player.hunger--;
+    // Update status effects
+    if (this.player.status.confused > 0) {
+      this.player.status.confused--;
+      if (this.player.status.confused === 0) {
+        this.addMessage('You feel less confused.');
+      }
+    }
+    if (this.player.status.blind > 0) {
+      this.player.status.blind--;
+      if (this.player.status.blind === 0) {
+        this.addMessage('You can see again!');
+      }
+    }
+    if (this.player.status.paralyzed > 0) {
+      this.player.status.paralyzed--;
+      if (this.player.status.paralyzed === 0) {
+        this.addMessage('You can move again.');
+      }
+    }
+
+    // Update hunger (faster on deeper levels)
+    const hungerDrain = 1 + Math.floor(this.currentLevelNum / 10);
+    this.player.hunger -= hungerDrain;
     if (this.player.hunger <= 0 && !this.gameOver) {
       this.player.hp -= 1;
       if (this.player.hp <= 0) {
@@ -589,13 +686,11 @@ export class Game {
 
   private applyWandEffect(wand: Item, monster: Monster): void {
     switch (wand.effect) {
-      case 'magicMissile':
-      case 'lightning':
-      case 'fire':
-      case 'cold':
+      case 'magicMissile': {
+        // Reliable single-target damage
         const damage = Math.floor(Math.random() * 6) + 6; // 6-12 damage
         monster.hp -= damage;
-        this.addMessage(`The ${monster.name} is hit for ${damage} damage!`);
+        this.addMessage(`The magic missile hits the ${monster.name} for ${damage} damage!`);
         if (monster.hp <= 0) {
           const leveledUp = addExp(this.player, monster.exp);
           this.level.removeMonster(monster);
@@ -605,6 +700,65 @@ export class Game {
           }
         }
         break;
+      }
+      case 'lightning': {
+        // Chains to nearby enemies with reduced damage
+        const targets = [monster];
+        // Find up to 2 more monsters within 3 tiles of the target
+        for (const m of this.level.monsters) {
+          if (m === monster) continue;
+          const dist = Math.abs(m.x - monster.x) + Math.abs(m.y - monster.y);
+          if (dist <= 3 && targets.length < 3) {
+            targets.push(m);
+          }
+        }
+        let chainDamage = 10; // First target takes most damage
+        for (const target of targets) {
+          target.hp -= chainDamage;
+          this.addMessage(`Lightning strikes the ${target.name} for ${chainDamage} damage!`);
+          if (target.hp <= 0) {
+            const leveledUp = addExp(this.player, target.exp);
+            this.level.removeMonster(target);
+            this.addMessage(`The ${target.name} is killed!`);
+            if (leveledUp) {
+              this.addMessage(`Welcome to level ${this.player.level}!`);
+            }
+          }
+          chainDamage = Math.floor(chainDamage * 0.6); // 60% damage to next target
+        }
+        break;
+      }
+      case 'fire': {
+        // Burns for high damage
+        const damage = Math.floor(Math.random() * 8) + 8; // 8-16 damage
+        monster.hp -= damage;
+        this.addMessage(`Fire engulfs the ${monster.name} for ${damage} damage!`);
+        if (monster.hp <= 0) {
+          const leveledUp = addExp(this.player, monster.exp);
+          this.level.removeMonster(monster);
+          this.addMessage(`The ${monster.name} is incinerated!`);
+          if (leveledUp) {
+            this.addMessage(`Welcome to level ${this.player.level}!`);
+          }
+        }
+        break;
+      }
+      case 'cold': {
+        // Lower damage but puts the monster to sleep (slows them)
+        const damage = Math.floor(Math.random() * 4) + 4; // 4-8 damage
+        monster.hp -= damage;
+        monster.sleeping = true; // Frozen = sleeping
+        this.addMessage(`Cold freezes the ${monster.name} for ${damage} damage! It is slowed.`);
+        if (monster.hp <= 0) {
+          const leveledUp = addExp(this.player, monster.exp);
+          this.level.removeMonster(monster);
+          this.addMessage(`The ${monster.name} shatters!`);
+          if (leveledUp) {
+            this.addMessage(`Welcome to level ${this.player.level}!`);
+          }
+        }
+        break;
+      }
       case 'slow':
         this.addMessage(`The ${monster.name} slows down.`);
         break;
@@ -821,7 +975,22 @@ export class Game {
 
         if (isVisible) {
           if (monster) {
-            this.display.drawWorld(x, y, monster.char, monster.color, '#000');
+            // Check if monster is invisible
+            const isInvisible = monster.flags.includes('invisible');
+            const canSee = !isInvisible ||
+                          this.player.status.seeInvisible ||
+                          (Math.abs(monster.x - this.player.x) <= 1 && Math.abs(monster.y - this.player.y) <= 1);
+            if (canSee) {
+              this.display.drawWorld(x, y, monster.char, monster.color, '#000');
+            } else {
+              // Monster is invisible - show the floor/items underneath
+              if (items.length > 0) {
+                const topItem = items[items.length - 1];
+                this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');
+              } else {
+                this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), '#000');
+              }
+            }
           } else if (items.length > 0) {
             const topItem = items[items.length - 1];
             this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');

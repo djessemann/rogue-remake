@@ -29,25 +29,43 @@ export interface Monster {
   sleeping: boolean;
 }
 
-// Monster definitions (subset for Phase 1) - Bright saturated colors
+// Monster definitions - Bright saturated colors
+// HP increased by 20% from original values
 export const MONSTER_DEFS: Record<string, MonsterDef> = {
-  B: { char: 'B', name: 'bat', color: '#ff44aa', hp: [1, 8], damage: '1d2', armor: 3, exp: 1, minLevel: 1, flags: ['erratic'] },
-  E: { char: 'E', name: 'emu', color: '#44ff44', hp: [1, 8], damage: '1d2', armor: 7, exp: 2, minLevel: 1, flags: [] },
-  H: { char: 'H', name: 'hobgoblin', color: '#ff8800', hp: [1, 8], damage: '1d8', armor: 5, exp: 3, minLevel: 1, flags: ['mean'] },
-  I: { char: 'I', name: 'ice monster', color: '#00ffff', hp: [1, 8], damage: '0d0', armor: 9, exp: 5, minLevel: 1, flags: ['freeze'] },
-  K: { char: 'K', name: 'kestrel', color: '#ffff00', hp: [1, 8], damage: '1d4', armor: 7, exp: 1, minLevel: 1, flags: ['erratic'] },
-  O: { char: 'O', name: 'orc', color: '#00ff88', hp: [1, 8], damage: '1d8', armor: 6, exp: 5, minLevel: 4, flags: ['greedy'] },
-  R: { char: 'R', name: 'rattlesnake', color: '#88ff00', hp: [2, 8], damage: '1d6', armor: 3, exp: 9, minLevel: 4, flags: ['mean'] },
-  S: { char: 'S', name: 'snake', color: '#00ff00', hp: [1, 8], damage: '1d3', armor: 5, exp: 2, minLevel: 1, flags: ['mean'] },
-  Z: { char: 'Z', name: 'zombie', color: '#aa88ff', hp: [2, 8], damage: '1d8', armor: 8, exp: 6, minLevel: 5, flags: ['mean'] },
+  // Early game (Level 1-3)
+  B: { char: 'B', name: 'bat', color: '#ff44aa', hp: [1, 10], damage: '1d2', armor: 3, exp: 1, minLevel: 1, flags: ['erratic'] },
+  E: { char: 'E', name: 'emu', color: '#44ff44', hp: [1, 10], damage: '1d2', armor: 7, exp: 2, minLevel: 1, flags: [] },
+  H: { char: 'H', name: 'hobgoblin', color: '#ff8800', hp: [1, 10], damage: '1d8', armor: 5, exp: 3, minLevel: 1, flags: ['mean'] },
+  I: { char: 'I', name: 'ice monster', color: '#00ffff', hp: [1, 10], damage: '0d0', armor: 9, exp: 5, minLevel: 1, flags: ['freeze'] },
+  K: { char: 'K', name: 'kestrel', color: '#ffff00', hp: [1, 10], damage: '1d4', armor: 7, exp: 1, minLevel: 1, flags: ['erratic'] },
+  S: { char: 'S', name: 'snake', color: '#00ff00', hp: [1, 10], damage: '1d3', armor: 5, exp: 2, minLevel: 1, flags: ['mean'] },
+
+  // Mid game (Level 4-7)
+  O: { char: 'O', name: 'orc', color: '#00ff88', hp: [1, 10], damage: '1d8', armor: 6, exp: 5, minLevel: 4, flags: ['greedy'] },
+  R: { char: 'R', name: 'rattlesnake', color: '#88ff00', hp: [2, 10], damage: '1d6', armor: 3, exp: 9, minLevel: 4, flags: ['mean', 'drainStr'] },
+  Z: { char: 'Z', name: 'zombie', color: '#aa88ff', hp: [2, 10], damage: '1d8', armor: 8, exp: 6, minLevel: 5, flags: ['mean'] },
+
+  // Late-mid game (Level 8-12)
+  A: { char: 'A', name: 'aquator', color: '#4488ff', hp: [2, 10], damage: '0d0', armor: 2, exp: 15, minLevel: 8, flags: ['mean', 'rustArmor'] },
+  T: { char: 'T', name: 'troll', color: '#00aa44', hp: [3, 10], damage: '2d6', armor: 4, exp: 25, minLevel: 8, flags: ['mean', 'regenerate'] },
+  P: { char: 'P', name: 'phantom', color: '#aa88cc', hp: [2, 10], damage: '1d8', armor: 3, exp: 20, minLevel: 10, flags: ['mean', 'invisible'] },
+  N: { char: 'N', name: 'nymph', color: '#ff88ff', hp: [2, 10], damage: '0d0', armor: 9, exp: 18, minLevel: 11, flags: ['stealItem'] },
+
+  // Late game (Level 13+)
+  V: { char: 'V', name: 'vampire', color: '#ff0044', hp: [3, 10], damage: '1d10', armor: 1, exp: 40, minLevel: 13, flags: ['mean', 'drainHP'] },
+  W: { char: 'W', name: 'wraith', color: '#888888', hp: [2, 10], damage: '1d6', armor: 4, exp: 35, minLevel: 15, flags: ['mean', 'drainXP', 'invisible'] },
 };
 
-export function createMonster(def: MonsterDef, x: number, y: number): Monster {
+export function createMonster(def: MonsterDef, x: number, y: number, levelNum: number = 1): Monster {
   const [dice, sides] = def.hp;
   let hp = 0;
   for (let i = 0; i < dice; i++) {
     hp += Math.floor(Math.random() * sides) + 1;
   }
+
+  // Depth scaling: monsters get +1 HP per 3 levels beyond their minLevel
+  const depthBonus = Math.floor((levelNum - def.minLevel) / 3);
+  hp += depthBonus;
 
   return {
     x,
@@ -60,7 +78,7 @@ export function createMonster(def: MonsterDef, x: number, y: number): Monster {
     damage: def.damage,
     armor: def.armor,
     exp: def.exp,
-    flags: def.flags,
+    flags: [...def.flags], // Copy flags so we can modify per-instance
     sleeping: !def.flags.includes('mean'), // Mean monsters wake up immediately
   };
 }
