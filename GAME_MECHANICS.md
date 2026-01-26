@@ -304,5 +304,5 @@ The following features are planned for future updates:
 - **Rings** - Passive bonuses when worn
 - **Wands** - Ranged magic attacks
 - **More monsters** - All 26 letters of the alphabet
-- **The Amulet of Yendor** - The ultimate goal on level 26
+- **The Glowing Goblet** - The ultimate goal on level 26
 - **Save/Load** - Continue your adventure later

@@ -119,11 +119,11 @@ export function initializeItemAppearances(): ItemAppearances {
   };
 }
 
-// Item effect colors
+// Item effect colors - Pastel palette
 const POTION_DISPLAY_COLORS: Record<string, string> = {
-  red: '#f44', blue: '#44f', green: '#4f4', yellow: '#ff4', orange: '#fa4',
-  purple: '#a4f', white: '#fff', black: '#444', brown: '#a64', pink: '#f8a',
-  grey: '#888', clear: '#aff', murky: '#654', golden: '#fd4', silver: '#ccc'
+  red: '#f0a0a0', blue: '#a0a0f0', green: '#a0f0a0', yellow: '#f0f0a0', orange: '#f0c0a0',
+  purple: '#c0a0f0', white: '#f0f0f0', black: '#606060', brown: '#c0a080', pink: '#f0b0c0',
+  grey: '#a0a0a0', clear: '#c0f0f0', murky: '#908070', golden: '#f0d090', silver: '#d0d0e0'
 };
 
 // === GOLD ===
@@ -133,7 +133,7 @@ export function createGold(x: number, y: number, levelNum: number): Item {
     type: 'gold',
     name: `${value} gold pieces`,
     char: '*',
-    color: '#ff0',
+    color: '#f0e090',
     x,
     y,
     value,
@@ -146,7 +146,7 @@ export function createFood(x: number, y: number): Item {
     type: 'food',
     name: 'some food',
     char: ':',
-    color: '#a52',
+    color: '#d0a080',
     x,
     y,
     value: 1,
@@ -159,7 +159,7 @@ export function createWeapon(x: number, y: number, name: string, bonus: number =
     type: 'weapon',
     name: bonus !== 0 ? `${bonus > 0 ? '+' : ''}${bonus} ${name}` : name,
     char: ')',
-    color: '#0af',
+    color: '#a0c0e0',
     x,
     y,
     value: 0,
@@ -173,7 +173,7 @@ export function createArmor(x: number, y: number, name: string, bonus: number = 
     type: 'armor',
     name: bonus !== 0 ? `${bonus > 0 ? '+' : ''}${bonus} ${name}` : name,
     char: '[',
-    color: '#0af',
+    color: '#a0c0e0',
     x,
     y,
     value: bonus,
@@ -222,7 +222,7 @@ export function createScroll(x: number, y: number, effect: ScrollEffect, appeara
     type: 'scroll',
     name: identified ? `scroll of ${formatEffectName(effect)}` : `scroll titled "${title}"`,
     char: '?',
-    color: '#fff',
+    color: '#f0f0e0',
     x,
     y,
     value: 0,
@@ -263,7 +263,7 @@ export function createRing(x: number, y: number, effect: RingEffect, appearances
     type: 'ring',
     name,
     char: '=',
-    color: '#fa0',
+    color: '#f0c090',
     x,
     y,
     value: 0,
@@ -290,7 +290,7 @@ export function createWand(x: number, y: number, effect: WandEffect, appearances
     type: 'wand',
     name: identified ? `wand of ${formatEffectName(effect)}` : `${material} wand`,
     char: '/',
-    color: '#af0',
+    color: '#c0f0a0',
     x,
     y,
     value: 0,
@@ -306,13 +306,13 @@ export function getRandomWandEffect(): WandEffect {
   return effects[Math.floor(Math.random() * effects.length)];
 }
 
-// === AMULET ===
+// === GOBLET ===
 export function createAmulet(x: number, y: number): Item {
   return {
     type: 'amulet',
-    name: 'The Amulet of Yendor',
-    char: '"',
-    color: '#f0f',
+    name: 'The Glowing Goblet',
+    char: 'U',
+    color: '#f0d090',
     x,
     y,
     value: 0,

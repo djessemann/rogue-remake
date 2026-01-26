@@ -29,17 +29,17 @@ export interface Monster {
   sleeping: boolean;
 }
 
-// Monster definitions (subset for Phase 1)
+// Monster definitions (subset for Phase 1) - Pastel color palette
 export const MONSTER_DEFS: Record<string, MonsterDef> = {
-  B: { char: 'B', name: 'bat', color: '#a52', hp: [1, 8], damage: '1d2', armor: 3, exp: 1, minLevel: 1, flags: ['erratic'] },
-  E: { char: 'E', name: 'emu', color: '#0a0', hp: [1, 8], damage: '1d2', armor: 7, exp: 2, minLevel: 1, flags: [] },
-  H: { char: 'H', name: 'hobgoblin', color: '#f80', hp: [1, 8], damage: '1d8', armor: 5, exp: 3, minLevel: 1, flags: ['mean'] },
-  I: { char: 'I', name: 'ice monster', color: '#0ff', hp: [1, 8], damage: '0d0', armor: 9, exp: 5, minLevel: 1, flags: ['freeze'] },
-  K: { char: 'K', name: 'kestrel', color: '#aa0', hp: [1, 8], damage: '1d4', armor: 7, exp: 1, minLevel: 1, flags: ['erratic'] },
-  O: { char: 'O', name: 'orc', color: '#0f0', hp: [1, 8], damage: '1d8', armor: 6, exp: 5, minLevel: 4, flags: ['greedy'] },
-  R: { char: 'R', name: 'rattlesnake', color: '#0a0', hp: [2, 8], damage: '1d6', armor: 3, exp: 9, minLevel: 4, flags: ['mean'] },
-  S: { char: 'S', name: 'snake', color: '#0a0', hp: [1, 8], damage: '1d3', armor: 5, exp: 2, minLevel: 1, flags: ['mean'] },
-  Z: { char: 'Z', name: 'zombie', color: '#888', hp: [2, 8], damage: '1d8', armor: 8, exp: 6, minLevel: 5, flags: ['mean'] },
+  B: { char: 'B', name: 'bat', color: '#c9a0b0', hp: [1, 8], damage: '1d2', armor: 3, exp: 1, minLevel: 1, flags: ['erratic'] },
+  E: { char: 'E', name: 'emu', color: '#90d090', hp: [1, 8], damage: '1d2', armor: 7, exp: 2, minLevel: 1, flags: [] },
+  H: { char: 'H', name: 'hobgoblin', color: '#ffb090', hp: [1, 8], damage: '1d8', armor: 5, exp: 3, minLevel: 1, flags: ['mean'] },
+  I: { char: 'I', name: 'ice monster', color: '#a0e0f0', hp: [1, 8], damage: '0d0', armor: 9, exp: 5, minLevel: 1, flags: ['freeze'] },
+  K: { char: 'K', name: 'kestrel', color: '#e0d090', hp: [1, 8], damage: '1d4', armor: 7, exp: 1, minLevel: 1, flags: ['erratic'] },
+  O: { char: 'O', name: 'orc', color: '#a0e0a0', hp: [1, 8], damage: '1d8', armor: 6, exp: 5, minLevel: 4, flags: ['greedy'] },
+  R: { char: 'R', name: 'rattlesnake', color: '#a0c0a0', hp: [2, 8], damage: '1d6', armor: 3, exp: 9, minLevel: 4, flags: ['mean'] },
+  S: { char: 'S', name: 'snake', color: '#a0c0a0', hp: [1, 8], damage: '1d3', armor: 5, exp: 2, minLevel: 1, flags: ['mean'] },
+  Z: { char: 'Z', name: 'zombie', color: '#a0a0b0', hp: [2, 8], damage: '1d8', armor: 8, exp: 6, minLevel: 5, flags: ['mean'] },
 };
 
 export function createMonster(def: MonsterDef, x: number, y: number): Monster {

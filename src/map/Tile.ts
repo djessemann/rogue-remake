@@ -34,13 +34,13 @@ export function getTileChar(tile: Tile): string {
 
 export function getTileColor(tile: Tile): string {
   switch (tile.type) {
-    case 'floor': return '#666';
-    case 'wall': return '#964B00';
-    case 'corridor': return '#964B00';
-    case 'door': return '#8B4513';
-    case 'stairs_down': return '#0ff';
-    case 'stairs_up': return '#0ff';
+    case 'floor': return '#808080';
+    case 'wall': return '#c9a090';
+    case 'corridor': return '#c9a090';
+    case 'door': return '#b0a090';
+    case 'stairs_down': return '#a0e0f0';
+    case 'stairs_up': return '#a0e0f0';
     case 'void': return '#000';
-    default: return '#aaa';
+    default: return '#b0b0b0';
   }
 }
