@@ -13,25 +13,42 @@ export class Display {
   private cameraX: number = 0;
   private cameraY: number = 0;
 
+  // Track logical font size for CSS scaling
+  private logicalFontSize: number = 16;
+
   constructor(container: HTMLElement) {
     this.container = container;
-    const fontSize = this.calculateFontSize();
+    this.logicalFontSize = this.calculateFontSize();
+
+    // Render at higher resolution for crisp text on high-DPI displays
+    const dpr = window.devicePixelRatio || 1;
+    const renderFontSize = Math.round(this.logicalFontSize * dpr);
 
     this.rotDisplay = new ROT.Display({
       width: VIEWPORT_COLS,
       height: VIEWPORT_ROWS,
-      fontSize,
+      fontSize: renderFontSize,
       fontFamily: 'monospace',
       forceSquareRatio: true,
       bg: '#111',
     });
 
-    const canvas = this.rotDisplay.getContainer();
+    const canvas = this.rotDisplay.getContainer() as HTMLCanvasElement;
     if (canvas) {
+      // Scale canvas back down with CSS for crisp rendering
+      this.applyCanvasScaling(canvas, dpr);
       container.appendChild(canvas);
     }
 
     window.addEventListener('resize', () => this.handleResize());
+  }
+
+  private applyCanvasScaling(canvas: HTMLCanvasElement, dpr: number): void {
+    // Get the actual canvas dimensions and scale down for display
+    const width = canvas.width / dpr;
+    const height = canvas.height / dpr;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
   }
 
   private calculateFontSize(): number {
@@ -48,8 +65,16 @@ export class Display {
   }
 
   private handleResize(): void {
-    const fontSize = this.calculateFontSize();
-    this.rotDisplay.setOptions({ fontSize });
+    this.logicalFontSize = this.calculateFontSize();
+    const dpr = window.devicePixelRatio || 1;
+    const renderFontSize = Math.round(this.logicalFontSize * dpr);
+
+    this.rotDisplay.setOptions({ fontSize: renderFontSize });
+
+    const canvas = this.rotDisplay.getContainer() as HTMLCanvasElement;
+    if (canvas) {
+      this.applyCanvasScaling(canvas, dpr);
+    }
   }
 
   // Center the camera on a position (usually the player)
