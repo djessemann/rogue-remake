@@ -1008,10 +1008,15 @@ export class Game {
     this.display.drawWorld(this.player.x, this.player.y, '@', '#ffffff', '#000');
 
     // Render status bar
-    const hungerStatus = this.player.hunger < 50 ? ' Weak' : this.player.hunger < 150 ? ' Hungry' : '';
+    const hungerStatus = this.player.hunger < 50 ? 'Weak' : this.player.hunger < 150 ? 'Hungry' : '';
     this.statusBar.innerHTML = `
-      <span>Lv:${this.currentLevelNum} HP:${this.player.hp}/${this.player.maxHp} Str:${this.player.strength} Def:${this.player.armor} Exp:${this.player.level}/${this.player.exp}${hungerStatus}</span>
+      <span>Lv:${this.currentLevelNum}</span>
+      <span>HP:${this.player.hp}/${this.player.maxHp}</span>
+      <span>Str:${this.player.strength}</span>
+      <span>Def:${this.player.armor}</span>
+      <span>Exp:${this.player.exp}</span>
       <span>Gold:${this.player.gold}</span>
+      ${hungerStatus ? `<span class="status-warning">${hungerStatus}</span>` : ''}
     `;
   }
 }

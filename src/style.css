@@ -34,12 +34,16 @@ html, body {
 
 #status-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 8px 8px 4px;
   background-color: #111;
   font-size: 14px;
   color: var(--highlight-color);
   flex-shrink: 0;
+}
+
+#status-bar .status-warning {
+  color: #ff6644;
 }
 
 #display {
