@@ -41,8 +41,9 @@ export class Display {
     const fontByWidth = Math.floor(availableWidth / VIEWPORT_COLS);
     const fontByHeight = Math.floor(availableHeight / VIEWPORT_ROWS);
 
-    // Use larger font for better visibility on mobile (30% zoom)
-    return Math.max(16, Math.min(fontByWidth, fontByHeight, 32));
+    // Calculate base size, then apply 15% zoom for better visibility
+    const baseSize = Math.min(fontByWidth, fontByHeight, 32);
+    return Math.max(18, Math.floor(baseSize * 1.15));
   }
 
   private handleResize(): void {
