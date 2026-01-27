@@ -24,8 +24,8 @@ export class Display {
     const dpr = window.devicePixelRatio || 1;
     const renderFontSize = Math.round(this.logicalFontSize * dpr);
 
-    // Use specific fonts known for crisp rendering
-    const fontStack = '"Courier New", Courier, "Lucida Console", Monaco, monospace';
+    // Classic terminal-style font for authentic retro feel
+    const fontStack = 'Menlo, Consolas, "DejaVu Sans Mono", monospace';
 
     this.rotDisplay = new ROT.Display({
       width: VIEWPORT_COLS,
