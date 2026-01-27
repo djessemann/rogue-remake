@@ -53,7 +53,7 @@ html, body {
   justify-content: center;
   overflow: hidden;
   min-height: 0;
-  max-height: 52vh;
+  max-height: calc(52vh - 20px);
 }
 
 #display canvas {
