@@ -66,10 +66,10 @@ html, body {
 }
 
 #message-log {
-  min-height: clamp(40px, 8vh, 60px);
-  padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 14px);
+  min-height: clamp(44px, 9vh, 66px);
+  padding: clamp(5px, 1.2vw, 10px) clamp(8px, 2vw, 14px);
   background-color: #0a0a0a;
-  font-size: clamp(11px, 2.2vw, 16px);
+  font-size: clamp(13px, 2.6vw, 18px);
   line-height: 1.4;
   overflow-y: auto;
   flex-shrink: 0;
@@ -100,14 +100,14 @@ html, body {
 }
 
 .action-btn {
-  width: clamp(36px, 9vw, 56px);
-  height: clamp(28px, 7vw, 44px);
+  width: clamp(40px, 10vw, 62px);
+  height: clamp(32px, 8vw, 50px);
   border: 1px solid var(--button-border);
   border-radius: clamp(3px, 0.8vw, 6px);
   background-color: var(--button-bg);
   color: var(--text-color);
   font-family: monospace;
-  font-size: clamp(13px, 3vw, 20px);
+  font-size: clamp(14px, 3.2vw, 22px);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -121,8 +121,8 @@ html, body {
 #dpad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(2px, 0.6vw, 5px);
-  max-width: clamp(120px, 30vw, 200px);
+  gap: clamp(3px, 0.7vw, 6px);
+  max-width: clamp(135px, 34vw, 225px);
   margin: 0 auto;
 }
 
@@ -133,12 +133,12 @@ html, body {
   background-color: var(--button-bg);
   color: var(--text-color);
   font-family: monospace;
-  font-size: clamp(14px, 3.5vw, 24px);
+  font-size: clamp(16px, 4vw, 26px);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: clamp(36px, 9vw, 56px);
+  min-height: clamp(40px, 10vw, 64px);
 }
 
 .dpad-btn:active {
