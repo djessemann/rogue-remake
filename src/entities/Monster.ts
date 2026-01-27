@@ -44,16 +44,27 @@ export const MONSTER_DEFS: Record<string, MonsterDef> = {
   O: { char: 'O', name: 'orc', color: '#00ff88', hp: [1, 10], damage: '1d8', armor: 6, exp: 5, minLevel: 4, flags: ['greedy'] },
   R: { char: 'R', name: 'rattlesnake', color: '#88ff00', hp: [2, 10], damage: '1d6', armor: 3, exp: 9, minLevel: 4, flags: ['mean', 'drainStr'] },
   Z: { char: 'Z', name: 'zombie', color: '#aa88ff', hp: [2, 10], damage: '1d8', armor: 8, exp: 6, minLevel: 5, flags: ['mean'] },
+  Q: { char: 'Q', name: 'quagga', color: '#cc8844', hp: [3, 10], damage: '1d5/1d5', armor: 3, exp: 15, minLevel: 6, flags: ['mean'] },
+  L: { char: 'L', name: 'leprechaun', color: '#00ff44', hp: [3, 10], damage: '1d2', armor: 8, exp: 10, minLevel: 7, flags: ['stealGold'] },
 
   // Late-mid game (Level 8-12)
   A: { char: 'A', name: 'aquator', color: '#4488ff', hp: [2, 10], damage: '0d0', armor: 2, exp: 15, minLevel: 8, flags: ['mean', 'rustArmor'] },
+  C: { char: 'C', name: 'centaur', color: '#ddaa44', hp: [4, 10], damage: '1d2/1d5/1d5', armor: 4, exp: 17, minLevel: 8, flags: [] },
   T: { char: 'T', name: 'troll', color: '#00aa44', hp: [3, 10], damage: '2d6', armor: 4, exp: 25, minLevel: 8, flags: ['mean', 'regenerate'] },
   P: { char: 'P', name: 'phantom', color: '#aa88cc', hp: [2, 10], damage: '1d8', armor: 3, exp: 20, minLevel: 10, flags: ['mean', 'invisible'] },
   N: { char: 'N', name: 'nymph', color: '#ff88ff', hp: [2, 10], damage: '0d0', armor: 9, exp: 18, minLevel: 11, flags: ['stealItem'] },
+  Y: { char: 'Y', name: 'yeti', color: '#eeeeff', hp: [4, 10], damage: '1d6/1d6', armor: 6, exp: 50, minLevel: 11, flags: [] },
+  F: { char: 'F', name: 'venus flytrap', color: '#44cc44', hp: [8, 10], damage: '0d0', armor: 3, exp: 80, minLevel: 12, flags: ['mean', 'holdPlayer'] },
+  X: { char: 'X', name: 'xeroc', color: '#aaaaaa', hp: [7, 10], damage: '4d4', armor: 7, exp: 100, minLevel: 12, flags: ['mimic'] },
 
   // Late game (Level 13+)
   V: { char: 'V', name: 'vampire', color: '#ff0044', hp: [3, 10], damage: '1d10', armor: 1, exp: 40, minLevel: 13, flags: ['mean', 'drainHP'] },
+  U: { char: 'U', name: 'ur-vile', color: '#440088', hp: [7, 10], damage: '1d9/1d9/2d9', armor: -2, exp: 190, minLevel: 14, flags: ['mean'] },
   W: { char: 'W', name: 'wraith', color: '#888888', hp: [2, 10], damage: '1d6', armor: 4, exp: 35, minLevel: 15, flags: ['mean', 'drainXP', 'invisible'] },
+  M: { char: 'M', name: 'medusa', color: '#22ff88', hp: [8, 10], damage: '3d4/3d4/2d5', armor: 2, exp: 200, minLevel: 16, flags: ['mean', 'confuse'] },
+  G: { char: 'G', name: 'griffin', color: '#ffcc00', hp: [13, 10], damage: '4d3/3d5', armor: 2, exp: 2000, minLevel: 18, flags: ['mean', 'erratic', 'regenerate'] },
+  J: { char: 'J', name: 'jabberwock', color: '#ff8844', hp: [15, 10], damage: '2d12/2d4', armor: 6, exp: 3000, minLevel: 20, flags: [] },
+  D: { char: 'D', name: 'dragon', color: '#ff2200', hp: [10, 10], damage: '1d8/1d8/3d10', armor: -1, exp: 5000, minLevel: 22, flags: ['mean', 'fireBreath'] },
 };
 
 export function createMonster(def: MonsterDef, x: number, y: number, levelNum: number = 1): Monster {

@@ -5,6 +5,7 @@ export interface StatusEffects {
   confused: number;    // Turns remaining
   blind: number;       // Turns remaining
   paralyzed: number;   // Turns remaining
+  held: number;        // Turns remaining (Venus Flytrap)
   seeInvisible: boolean;
 }
 
@@ -56,6 +57,7 @@ export function createPlayer(x: number, y: number): Player {
       confused: 0,
       blind: 0,
       paralyzed: 0,
+      held: 0,
       seeInvisible: false,
     },
   };

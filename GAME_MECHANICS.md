@@ -146,12 +146,23 @@ Monsters have had their HP increased by 20% for added challenge. All monsters no
 | O | Orc | Teal | 1d10 (1-10) | 6 | 5 | Level 4 | Greedy |
 | R | Rattlesnake | Lime | 2d10 (2-20) | 3 | 9 | Level 4 | **Drains Strength** |
 | Z | Zombie | Purple | 2d10 (2-20) | 8 | 6 | Level 5 | Aggressive |
+| Q | Quagga | Brown | 3d10 (3-30) | 3 | 15 | Level 6 | Aggressive |
+| L | Leprechaun | Green | 3d10 (3-30) | 8 | 10 | Level 7 | **Steals Gold** |
 | A | Aquator | Blue | 2d10 (2-20) | 2 | 15 | Level 8 | **Rusts Armor** |
+| C | Centaur | Gold | 4d10 (4-40) | 4 | 17 | Level 8 | None |
 | T | Troll | Green | 3d10 (3-30) | 4 | 25 | Level 8 | **Regenerates HP** |
 | P | Phantom | Lavender | 2d10 (2-20) | 3 | 20 | Level 10 | **Invisible** |
 | N | Nymph | Pink | 2d10 (2-20) | 9 | 18 | Level 11 | **Steals Items** |
+| Y | Yeti | White | 4d10 (4-40) | 6 | 50 | Level 11 | None |
+| F | Venus Flytrap | Green | 8d10 (8-80) | 3 | 80 | Level 12 | **Holds Player** |
+| X | Xeroc | Gray | 7d10 (7-70) | 7 | 100 | Level 12 | Mimic |
 | V | Vampire | Red | 3d10 (3-30) | 1 | 40 | Level 13 | **Drains Max HP** |
+| U | Ur-vile | Purple | 7d10 (7-70) | -2 | 190 | Level 14 | Aggressive |
 | W | Wraith | Gray | 2d10 (2-20) | 4 | 35 | Level 15 | **Drains XP, Invisible** |
+| M | Medusa | Teal | 8d10 (8-80) | 2 | 200 | Level 16 | **Confuses** |
+| G | Griffin | Gold | 13d10 (13-130) | 2 | 2000 | Level 18 | **Erratic, Regenerates** |
+| J | Jabberwock | Orange | 15d10 (15-150) | 6 | 3000 | Level 20 | None |
+| D | Dragon | Red | 10d10 (10-100) | -1 | 5000 | Level 22 | **Fire Breath** |
 
 ### Monster Damage
 
@@ -167,11 +178,22 @@ Monsters have had their HP increased by 20% for added challenge. All monsters no
 | Zombie | 1d8 (1-8) |
 | Ice Monster | 0 (freezes instead) |
 | Aquator | 0 (rusts armor instead) |
+| Quagga | 1d5/1d5 (2-10) |
+| Leprechaun | 1d2 (1-2) |
+| Centaur | 1d2/1d5/1d5 (3-12) |
 | Troll | 2d6 (2-12) |
 | Phantom | 1d8 (1-8) |
 | Nymph | 0 (steals items instead) |
+| Yeti | 1d6/1d6 (2-12) |
+| Venus Flytrap | 0 (holds instead) |
+| Xeroc | 4d4 (4-16) |
 | Vampire | 1d10 (1-10) |
+| Ur-vile | 1d9/1d9/2d9 (4-27) |
 | Wraith | 1d6 (1-6) |
+| Medusa | 3d4/3d4/2d5 (8-34) |
+| Griffin | 4d3/3d5 (7-27) |
+| Jabberwock | 2d12/2d4 (4-32) |
+| Dragon | 1d8/1d8/3d10 (5-46) |
 
 ### Monster Special Abilities
 
@@ -181,9 +203,13 @@ Some monsters have devastating special abilities that trigger when they hit you:
 |---------|--------|------------|
 | **Drain Strength** | 30% chance to lose 1 Strength | Rattlesnake |
 | **Rust Armor** | Reduces your armor bonus by 1 | Aquator |
-| **Regenerate** | Heals 1 HP per turn | Troll |
+| **Regenerate** | Heals 1 HP per turn | Troll, Griffin |
 | **Invisible** | Cannot see unless adjacent or have See Invisible | Phantom, Wraith |
 | **Steal Item** | Steals a random item from inventory and vanishes | Nymph |
+| **Steal Gold** | Steals 10-60 gold and vanishes | Leprechaun |
+| **Hold Player** | Traps you for 2-4 turns, preventing movement | Venus Flytrap |
+| **Confuse** | 50% chance to confuse you for 7-14 turns | Medusa |
+| **Fire Breath** | 33% chance to breathe fire for 3d6 extra damage | Dragon |
 | **Drain Max HP** | 25% chance to permanently lose 1 Max HP | Vampire |
 | **Drain XP** | 20% chance to lose experience points | Wraith |
 
@@ -499,7 +525,31 @@ Additional status indicators:
 
 ### Wraith (Level 15+)
 - Invisible AND drains experience
-- Most dangerous regular monster - avoid if possible
+- Very dangerous - seek See Invisible effects
+
+### Leprechaun (Level 7+)
+- Steals your gold and vanishes
+- Kill quickly before it touches you!
+
+### Venus Flytrap (Level 12+)
+- Holds you in place for several turns
+- Can't flee while trapped - kill it fast or die
+
+### Medusa (Level 16+)
+- Her gaze confuses you
+- Fight blind or strike fast before confusion sets in
+
+### Griffin (Level 18+)
+- Erratic movement AND regenerates HP
+- Extremely tough - save your best wands
+
+### Jabberwock (Level 20+)
+- Massive HP pool and devastating damage
+- Pure melee threat - burst it down quickly
+
+### Dragon (Level 22+)
+- Breathes fire for massive extra damage (3d6)
+- The most dangerous monster - use everything you have!
 
 ---
 

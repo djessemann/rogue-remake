@@ -203,6 +203,13 @@ export class Game {
       return;
     }
 
+    // Check if held (Venus Flytrap)
+    if (this.player.status.held > 0) {
+      this.addMessage('You are trapped and cannot move!');
+      this.endTurn();
+      return;
+    }
+
     let [dx, dy] = DIRECTIONS[dir];
 
     if (dx === 0 && dy === 0) {
@@ -334,6 +341,38 @@ export class Game {
       const stolen = this.player.inventory.splice(idx, 1)[0];
       this.addMessage(`The ${monster.name} steals your ${stolen.name} and vanishes!`);
       this.level.removeMonster(monster);
+    }
+
+    // Gold steal (Leprechaun)
+    if (monster.flags.includes('stealGold') && this.player.gold > 0) {
+      const stolen = Math.min(this.player.gold, Math.floor(Math.random() * 50) + 10);
+      this.player.gold -= stolen;
+      this.addMessage(`The ${monster.name} steals ${stolen} gold and vanishes!`);
+      this.level.removeMonster(monster);
+    }
+
+    // Hold player (Venus Flytrap)
+    if (monster.flags.includes('holdPlayer')) {
+      this.player.status.held = 2 + Math.floor(Math.random() * 3); // 2-4 turns
+      this.addMessage(`The ${monster.name} grabs you! You can't move!`);
+    }
+
+    // Confuse (Medusa)
+    if (monster.flags.includes('confuse') && this.player.status.confused === 0 && Math.random() < 0.5) {
+      this.player.status.confused = 7 + Math.floor(Math.random() * 8); // 7-14 turns
+      this.addMessage(`You meet the ${monster.name}'s gaze! You feel confused.`);
+    }
+
+    // Fire breath (Dragon) - extra damage
+    if (monster.flags.includes('fireBreath') && Math.random() < 0.33) {
+      const fireDamage = Math.floor(Math.random() * 6) + Math.floor(Math.random() * 6) + Math.floor(Math.random() * 6) + 3; // 3d6
+      this.player.hp -= fireDamage;
+      this.addMessage(`The ${monster.name} breathes fire! (${fireDamage} damage)`);
+      if (this.player.hp <= 0) {
+        this.player.hp = 0;
+        this.gameOver = true;
+        this.addMessage('You have been incinerated!');
+      }
     }
   }
 
@@ -487,6 +526,12 @@ export class Game {
       this.player.status.paralyzed--;
       if (this.player.status.paralyzed === 0) {
         this.addMessage('You can move again.');
+      }
+    }
+    if (this.player.status.held > 0) {
+      this.player.status.held--;
+      if (this.player.status.held === 0) {
+        this.addMessage('You break free!');
       }
     }
 
