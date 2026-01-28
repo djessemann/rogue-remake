@@ -3,7 +3,7 @@ import { Level, type Room } from './Level';
 import { COLS, MAP_ROWS } from '../constants';
 
 export class DungeonGenerator {
-  generate(levelNumber: number): Level {
+  generate(_levelNumber: number): Level {
     const level = new Level(COLS, MAP_ROWS);
 
     // Use rot-js Digger for dungeon generation
@@ -42,16 +42,9 @@ export class DungeonGenerator {
       });
     }
 
-    // Place stairs
+    // Place stairs (only upward - no going back down)
     if (level.rooms.length >= 2) {
-      // Stairs up in first room (except level 1)
-      if (levelNumber > 1) {
-        const upRoom = level.rooms[0];
-        level.stairsUp = { x: upRoom.centerX, y: upRoom.centerY };
-        level.setTile(upRoom.centerX, upRoom.centerY, 'stairs_up');
-      }
-
-      // Stairs down in last room
+      // Stairs up to next level (in last room)
       const downRoom = level.rooms[level.rooms.length - 1];
       level.stairsDown = { x: downRoom.centerX, y: downRoom.centerY };
       level.setTile(downRoom.centerX, downRoom.centerY, 'stairs_down');
