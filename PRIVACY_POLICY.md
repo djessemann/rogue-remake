@@ -1,10 +1,10 @@
-# Privacy Policy for Rogue's Gallery
+# Privacy Policy for Roguetype
 
 **Last Updated:** January 28, 2026
 
 ## Overview
 
-Rogue's Gallery ("the App") is developed by DJ Essemann. This privacy policy explains how the App handles user information.
+Roguetype ("the App") is developed by Jesse Mann. This privacy policy explains how the App handles user information.
 
 ## Data Collection
 
@@ -42,7 +42,7 @@ We may update this Privacy Policy from time to time. Any changes will be reflect
 
 If you have any questions about this Privacy Policy, please contact:
 
-**DJ Essemann**
+**Jesse Mann**
 Email: [your-email@example.com]
 GitHub: https://github.com/djessemann
 

@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.djessemann.roguesgallery',
-  appName: "Rogue's Gallery",
+  appId: 'com.jessemann.roguetype',
+  appName: 'Roguetype',
   webDir: 'dist',
   ios: {
     contentInset: 'automatic',
