@@ -36,39 +36,22 @@ export class Game {
 
   /**
    * Calculate the background color based on current tree level.
-   * Transitions from forest green (level 1) to sky blue (level 26).
-   * Colors are kept dark enough to maintain good contrast with game objects.
+   * Smooth gradient from forest green (level 1) to sky blue (level 26).
+   * Every floor gets progressively lighter and shifts from green to blue.
    */
   private getBackgroundForLevel(level: number): string {
     // Clamp level to 1-26
     const l = Math.max(1, Math.min(26, level));
 
-    // More dramatic color progression:
-    // Levels 1-9:   Deep forest green -> brighter green
-    // Levels 10-17: Green -> teal transition
-    // Levels 18-26: Teal -> sky blue
+    // Linear interpolation from level 1 to 26
+    // t goes from 0 (level 1) to 1 (level 26)
+    const t = (l - 1) / 25;
 
-    let r: number, g: number, b: number;
-
-    if (l <= 9) {
-      // Forest green - getting brighter
-      const t = (l - 1) / 8;
-      r = Math.round(20 + t * 15);     // 20 -> 35
-      g = Math.round(45 + t * 25);     // 45 -> 70
-      b = Math.round(30 + t * 20);     // 30 -> 50
-    } else if (l <= 17) {
-      // Green to teal transition
-      const t = (l - 10) / 7;
-      r = Math.round(35 + t * 10);     // 35 -> 45
-      g = Math.round(70 + t * 15);     // 70 -> 85
-      b = Math.round(50 + t * 35);     // 50 -> 85
-    } else {
-      // Teal to sky blue
-      const t = (l - 18) / 8;
-      r = Math.round(45 + t * 15);     // 45 -> 60
-      g = Math.round(85 + t * 15);     // 85 -> 100
-      b = Math.round(85 + t * 25);     // 85 -> 110
-    }
+    // Start color (deep forest green): #142d1e (r:20, g:45, b:30)
+    // End color (sky blue): #3c6470 (r:60, g:100, b:112)
+    const r = Math.round(20 + t * 40);    // 20 -> 60
+    const g = Math.round(45 + t * 55);    // 45 -> 100
+    const b = Math.round(30 + t * 82);    // 30 -> 112
 
     return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
   }
