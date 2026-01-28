@@ -66,13 +66,13 @@ html, body {
 }
 
 #message-log {
-  height: calc(3 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
-  min-height: calc(3 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
-  max-height: calc(3 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
   padding: clamp(5px, 1.3vw, 11px) clamp(9px, 2.2vw, 15px);
   background-color: #0a0a0a;
   font-size: clamp(12px, 2.5vw, 18px);
   line-height: 1.4;
+  height: calc(3lh + 2 * clamp(5px, 1.3vw, 11px));
+  min-height: calc(3lh + 2 * clamp(5px, 1.3vw, 11px));
+  max-height: calc(3lh + 2 * clamp(5px, 1.3vw, 11px));
   overflow: hidden;
   flex: 0 0 auto;
   border-top: 1px solid #333;
@@ -80,6 +80,7 @@ html, body {
 
 #message-log .message {
   color: var(--text-color);
+  margin: 0;
 }
 
 #message-log .message:first-child {
