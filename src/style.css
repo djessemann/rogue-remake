@@ -66,19 +66,18 @@ html, body {
 }
 
 #message-log {
-  min-height: clamp(47px, 10vh, 72px);
+  height: calc(4 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
   padding: clamp(5px, 1.3vw, 11px) clamp(9px, 2.2vw, 15px);
   background-color: #0a0a0a;
   font-size: clamp(14px, 2.8vw, 20px);
   line-height: 1.4;
-  overflow-y: auto;
+  overflow: hidden;
   flex-shrink: 0;
   border-top: 1px solid #333;
 }
 
 #message-log .message {
   color: var(--text-color);
-  margin-bottom: clamp(1px, 0.3vw, 3px);
 }
 
 #message-log .message:first-child {
