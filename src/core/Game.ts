@@ -36,44 +36,45 @@ export class Game {
 
   /**
    * Calculate the background color based on current tree level.
-   * Transitions from deep forest green (level 1) to sky blue (level 26).
+   * Transitions from forest green (level 1) to sky blue (level 26).
+   * Colors are kept dark enough to maintain good contrast with game objects.
    */
   private getBackgroundForLevel(level: number): string {
     // Clamp level to 1-26
     const l = Math.max(1, Math.min(26, level));
 
-    // Color stops for the gradient:
-    // Levels 1-8:   Deep dark green (forest floor)  #0a1a10 -> #0e2218
-    // Levels 9-15:  Mid green (trunk/lower canopy)  #102820 -> #183830
-    // Levels 16-21: Teal transition (upper canopy)  #1a4038 -> #264850
-    // Levels 22-26: Sky blue (crown/sky)            #2a5058 -> #3a6878
+    // Color stops for the gradient (lighter start, capped brightness at top):
+    // Levels 1-8:   Forest green (lighter start)    #1a3020 -> #1e3828
+    // Levels 9-15:  Mid green (canopy)              #203830 -> #284840
+    // Levels 16-21: Teal transition                 #2a4840 -> #305050
+    // Levels 22-26: Muted sky blue (not too bright) #325458 -> #3a5860
 
     let r: number, g: number, b: number;
 
     if (l <= 8) {
-      // Deep forest green
+      // Forest green - lighter starting point
       const t = (l - 1) / 7;
-      r = Math.round(10 + t * 4);      // 10 -> 14
-      g = Math.round(26 + t * 8);      // 26 -> 34
-      b = Math.round(16 + t * 8);      // 16 -> 24
+      r = Math.round(26 + t * 4);      // 26 -> 30
+      g = Math.round(48 + t * 8);      // 48 -> 56
+      b = Math.round(32 + t * 8);      // 32 -> 40
     } else if (l <= 15) {
-      // Mid green - more light filtering through
+      // Mid green - canopy light
       const t = (l - 9) / 6;
-      r = Math.round(16 + t * 8);      // 16 -> 24
-      g = Math.round(40 + t * 16);     // 40 -> 56
-      b = Math.round(32 + t * 16);     // 32 -> 48
+      r = Math.round(32 + t * 8);      // 32 -> 40
+      g = Math.round(56 + t * 16);     // 56 -> 72
+      b = Math.round(48 + t * 16);     // 48 -> 64
     } else if (l <= 21) {
-      // Teal transition - approaching canopy
+      // Teal transition - approaching sky
       const t = (l - 16) / 5;
-      r = Math.round(26 + t * 12);     // 26 -> 38
-      g = Math.round(64 + t * 8);      // 64 -> 72
-      b = Math.round(56 + t * 24);     // 56 -> 80
+      r = Math.round(42 + t * 6);      // 42 -> 48
+      g = Math.round(72 + t * 8);      // 72 -> 80
+      b = Math.round(64 + t * 16);     // 64 -> 80
     } else {
-      // Sky blue - crown of the tree
+      // Muted sky blue - crown (kept darker for contrast)
       const t = (l - 22) / 4;
-      r = Math.round(42 + t * 16);     // 42 -> 58
-      g = Math.round(80 + t * 24);     // 80 -> 104
-      b = Math.round(88 + t * 32);     // 88 -> 120
+      r = Math.round(50 + t * 8);      // 50 -> 58
+      g = Math.round(84 + t * 8);      // 84 -> 92
+      b = Math.round(88 + t * 8);      // 88 -> 96
     }
 
     return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
@@ -417,7 +418,8 @@ export class Game {
     } else if (item.type === 'amulet') {
       this.player.hasAmulet = true;
       this.level.removeItem(this.player.x, this.player.y, item);
-      this.addMessage('You grasp the Celestial Chalice! Now descend to safety!');
+      this.gameOver = true;
+      this.showVictory();
     } else {
       // Add to inventory
       if (this.player.inventory.length < 23) {
@@ -435,41 +437,22 @@ export class Game {
   private useStairsAuto(): void {
     const tile = this.level.getTile(this.player.x, this.player.y);
     if (tile?.type === 'stairs_down') {
-      this.useStairs('down');
-    } else if (tile?.type === 'stairs_up') {
-      this.useStairs('up');
+      this.climbUp();
     } else {
-      this.addMessage('There are no stairs here.');
+      this.addMessage('There is no way to climb here.');
     }
   }
 
-  private useStairs(direction: 'up' | 'down'): void {
+  private climbUp(): void {
     const tile = this.level.getTile(this.player.x, this.player.y);
 
-    if (direction === 'down') {
-      if (!tile || tile.type !== 'stairs_down') {
-        this.addMessage('There is no way up here.');
-        return;
-      }
-      this.currentLevelNum++;
-      this.addMessage(`You climb higher into the World Tree. (Level ${this.currentLevelNum})`);
-    } else {
-      if (!tile || tile.type !== 'stairs_up') {
-        this.addMessage('There is no way down here.');
-        return;
-      }
-      if (this.currentLevelNum === 1) {
-        if (this.player.hasAmulet) {
-          this.gameOver = true;
-          this.showVictory();
-          return;
-        }
-        this.addMessage('You cannot leave the World Tree without the Chalice!');
-        return;
-      }
-      this.currentLevelNum--;
-      this.addMessage(`You descend to a lower branch. (Level ${this.currentLevelNum})`);
+    if (!tile || tile.type !== 'stairs_down') {
+      this.addMessage('There is no way to climb here.');
+      return;
     }
+
+    this.currentLevelNum++;
+    this.addMessage(`You climb higher into the World Tree. (Level ${this.currentLevelNum})`);
 
     // Generate new level
     this.level = this.dungeonGenerator.generate(this.currentLevelNum);
@@ -878,12 +861,12 @@ export class Game {
       modal.id = 'help-modal';
       modal.innerHTML = `
         <h2>How to Play</h2>
-        <p><strong>Goal:</strong> Climb the World Tree, find the Celestial Chalice at the crown, and return safely.</p>
+        <p><strong>Goal:</strong> Climb the World Tree and find the Celestial Chalice at the crown!</p>
         <p><strong>D-Pad:</strong> Move in 8 directions. Center button waits.</p>
         <p><strong>Action Buttons:</strong></p>
         <p>I - Inventory</p>
         <p>P - Pick up item</p>
-        <p>S - Climb branches</p>
+        <p>S - Climb to next level</p>
         <p>? - This help</p>
         <p><strong>Keyboard:</strong> Arrow keys, numpad, or vi keys (hjkl) for movement.</p>
         <p><strong>Combat:</strong> Move into creatures to attack.</p>
@@ -940,7 +923,7 @@ export class Game {
 
     modal.innerHTML = `
       <h2>Victory!</h2>
-      <p class="victory-text">You have retrieved the Celestial Chalice and descended the World Tree safely!</p>
+      <p class="victory-text">You have reached the crown of the World Tree and claimed the Celestial Chalice!</p>
       <div class="stats">
         <p>Character Level: ${this.player.level}</p>
         <p>Gold Collected: ${this.player.gold}</p>
