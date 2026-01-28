@@ -938,7 +938,7 @@ export class Game {
   }
 
   private renderMessages(): void {
-    const recent = this.messages.slice(0, 3);
+    const recent = this.messages.slice(0, 4);
     this.messageLog.innerHTML = recent
       .map((m) => `<div class="message">${m}</div>`)
       .join('');
