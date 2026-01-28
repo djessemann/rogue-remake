@@ -66,12 +66,12 @@ html, body {
 }
 
 #message-log {
-  height: calc(4 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
-  min-height: calc(4 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
-  max-height: calc(4 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
+  height: calc(3 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
+  min-height: calc(3 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
+  max-height: calc(3 * 1.4em + 2 * clamp(5px, 1.3vw, 11px));
   padding: clamp(5px, 1.3vw, 11px) clamp(9px, 2.2vw, 15px);
   background-color: #0a0a0a;
-  font-size: clamp(14px, 2.8vw, 20px);
+  font-size: clamp(12px, 2.5vw, 18px);
   line-height: 1.4;
   overflow: hidden;
   flex: 0 0 auto;
