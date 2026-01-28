@@ -66,7 +66,9 @@ html, body {
 }
 
 #message-log {
-  min-height: clamp(47px, 10vh, 72px);
+  height: calc(6.2em + clamp(10px, 2.6vw, 22px));
+  min-height: calc(6.2em + clamp(10px, 2.6vw, 22px));
+  max-height: calc(6.2em + clamp(10px, 2.6vw, 22px));
   padding: clamp(5px, 1.3vw, 11px) clamp(9px, 2.2vw, 15px);
   background-color: #0a0a0a;
   font-size: clamp(14px, 2.8vw, 20px);
