@@ -7,9 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist",
-    "ios:build": "npm run build && npx cap sync ios",
-    "ios:open": "npx cap open ios"
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "homepage": "https://djessemann.github.io/rogue-remake",
   "devDependencies": {
@@ -18,9 +16,6 @@
     "vite": "^7.2.4"
   },
   "dependencies": {
-    "@capacitor/cli": "^8.0.2",
-    "@capacitor/core": "^8.0.2",
-    "@capacitor/ios": "^8.0.2",
     "rot-js": "^2.2.1"
   }
 }
