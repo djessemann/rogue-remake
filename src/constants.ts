@@ -24,19 +24,19 @@ export const TILES = {
   AMULET: '"',
 } as const;
 
-// Colors
+// Colors - World Tree theme
 export const COLORS = {
-  FLOOR: '#666',
-  WALL: '#964B00',
-  DOOR: '#8B4513',
-  STAIRS: '#0ff',
-  PLAYER: '#fff',
-  GOLD: '#ff0',
-  ITEM: '#f0f',
-  FOOD: '#a52',
-  POTION: '#f0f',
-  SCROLL: '#fff',
-  DEFAULT: '#aaa',
+  FLOOR: '#8a9080',      // Mossy stone
+  WALL: '#6d8a70',       // Living bark
+  DOOR: '#7a9070',       // Bark door
+  STAIRS: '#90d8b0',     // Bright leaf green
+  PLAYER: '#f0f8e0',     // Soft white-green glow
+  GOLD: '#ffd700',       // Golden treasures
+  ITEM: '#e0b0ff',       // Soft violet
+  FOOD: '#d4a574',       // Warm amber (nuts/berries)
+  POTION: '#b0e0d0',     // Pale green-cyan
+  SCROLL: '#f0e8d0',     // Aged parchment
+  DEFAULT: '#a8b8a0',    // Muted green-gray
 } as const;
 
 // Directions (for movement)

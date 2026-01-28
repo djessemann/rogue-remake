@@ -7,12 +7,12 @@
 }
 
 :root {
-  --bg-color: #000;
-  --text-color: #aaa;
-  --highlight-color: #fff;
-  --button-bg: #222;
-  --button-active: #444;
-  --button-border: #555;
+  --bg-color: #0a1a10;
+  --text-color: #a8b8a0;
+  --highlight-color: #e0f0d8;
+  --button-bg: #1a2a1e;
+  --button-active: #2a3a2e;
+  --button-border: #3a4a3e;
 }
 
 html, body {
@@ -29,14 +29,14 @@ html, body {
   height: 100%;
   max-width: 100vw;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-  background-color: #111;
+  background-color: #0e1a12;
 }
 
 #status-bar {
   display: flex;
   justify-content: space-evenly;
   padding: clamp(6px, 1.5vw, 12px) clamp(6px, 1.5vw, 12px) clamp(3px, 0.8vw, 6px);
-  background-color: #111;
+  background-color: #0e1a12;
   font-size: clamp(12px, 2.5vw, 18px);
   color: var(--highlight-color);
   flex-shrink: 0;
@@ -67,7 +67,7 @@ html, body {
 
 #message-log {
   padding: clamp(5px, 1.3vw, 11px) clamp(9px, 2.2vw, 15px);
-  background-color: #0a0a0a;
+  background-color: #081208;
   font-size: clamp(12px, 2.5vw, 18px);
   line-height: 1.4;
   height: calc(3lh + 2 * clamp(5px, 1.3vw, 11px));
@@ -75,7 +75,7 @@ html, body {
   max-height: calc(3lh + 2 * clamp(5px, 1.3vw, 11px));
   overflow: hidden;
   flex: 0 0 auto;
-  border-top: 1px solid #333;
+  border-top: 1px solid #2a3a28;
 }
 
 #message-log .message {
@@ -88,10 +88,10 @@ html, body {
 }
 
 #controls {
-  background-color: #111;
+  background-color: #0e1a12;
   padding: clamp(8px, 2vw, 16px) clamp(6px, 1.5vw, 12px) clamp(12px, 3vw, 24px);
   flex-shrink: 0;
-  border-top: 1px solid #333;
+  border-top: 1px solid #2a3a28;
 }
 
 #action-bar {
@@ -148,7 +148,7 @@ html, body {
 }
 
 .dpad-btn.center {
-  background-color: #1a1a1a;
+  background-color: #121e16;
 }
 
 /* Inventory Modal */
@@ -159,7 +159,7 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(8, 18, 10, 0.95);
   z-index: 100;
   padding: 16px;
   overflow-y: auto;
@@ -192,7 +192,7 @@ html, body {
 
 #inventory-list li {
   padding: 8px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #2a3a28;
 }
 
 /* Help Modal */
@@ -203,7 +203,7 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: rgba(8, 18, 10, 0.95);
   z-index: 100;
   padding: 16px;
   overflow-y: auto;
@@ -241,7 +241,7 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: rgba(8, 18, 10, 0.95);
   z-index: 200;
   padding: 32px 16px;
   overflow-y: auto;
@@ -299,7 +299,7 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: rgba(8, 18, 10, 0.95);
   z-index: 200;
   padding: 32px 16px;
   overflow-y: auto;
@@ -362,7 +362,7 @@ html, body {
 }
 
 #inventory-list li.item-row:hover {
-  background-color: #333;
+  background-color: #2a3a28;
 }
 
 #inventory-list li.equipped {
@@ -378,13 +378,13 @@ html, body {
   padding: 12px 24px;
   font-size: 16px;
   font-family: monospace;
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #555;
+  background-color: #1a2a1e;
+  color: var(--highlight-color);
+  border: 1px solid #3a4a3e;
   border-radius: 6px;
   cursor: pointer;
 }
 
 .modal-close-btn:active {
-  background-color: #444;
+  background-color: #2a3a2e;
 }
