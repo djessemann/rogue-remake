@@ -36,46 +36,22 @@ export class Game {
 
   /**
    * Calculate the background color based on current tree level.
-   * Transitions from forest green (level 1) to sky blue (level 26).
-   * Colors are kept dark enough to maintain good contrast with game objects.
+   * Smooth gradient from forest green (level 1) to sky blue (level 26).
+   * Every floor gets progressively lighter and shifts from green to blue.
    */
   private getBackgroundForLevel(level: number): string {
     // Clamp level to 1-26
     const l = Math.max(1, Math.min(26, level));
 
-    // Color stops for the gradient (lighter start, capped brightness at top):
-    // Levels 1-8:   Forest green (lighter start)    #1a3020 -> #1e3828
-    // Levels 9-15:  Mid green (canopy)              #203830 -> #284840
-    // Levels 16-21: Teal transition                 #2a4840 -> #305050
-    // Levels 22-26: Muted sky blue (not too bright) #325458 -> #3a5860
+    // Linear interpolation from level 1 to 26
+    // t goes from 0 (level 1) to 1 (level 26)
+    const t = (l - 1) / 25;
 
-    let r: number, g: number, b: number;
-
-    if (l <= 8) {
-      // Forest green - lighter starting point
-      const t = (l - 1) / 7;
-      r = Math.round(26 + t * 4);      // 26 -> 30
-      g = Math.round(48 + t * 8);      // 48 -> 56
-      b = Math.round(32 + t * 8);      // 32 -> 40
-    } else if (l <= 15) {
-      // Mid green - canopy light
-      const t = (l - 9) / 6;
-      r = Math.round(32 + t * 8);      // 32 -> 40
-      g = Math.round(56 + t * 16);     // 56 -> 72
-      b = Math.round(48 + t * 16);     // 48 -> 64
-    } else if (l <= 21) {
-      // Teal transition - approaching sky
-      const t = (l - 16) / 5;
-      r = Math.round(42 + t * 6);      // 42 -> 48
-      g = Math.round(72 + t * 8);      // 72 -> 80
-      b = Math.round(64 + t * 16);     // 64 -> 80
-    } else {
-      // Muted sky blue - crown (kept darker for contrast)
-      const t = (l - 22) / 4;
-      r = Math.round(50 + t * 8);      // 50 -> 58
-      g = Math.round(84 + t * 8);      // 84 -> 92
-      b = Math.round(88 + t * 8);      // 88 -> 96
-    }
+    // Start color (deep forest green): #142d1e (r:20, g:45, b:30)
+    // End color (sky blue): #3c6470 (r:60, g:100, b:112)
+    const r = Math.round(20 + t * 40);    // 20 -> 60
+    const g = Math.round(45 + t * 55);    // 45 -> 100
+    const b = Math.round(30 + t * 82);    // 30 -> 112
 
     return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
   }
