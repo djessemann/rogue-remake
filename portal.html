@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rogue - Choose Your Adventure</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #0a0a0a;
+        font-family: 'Menlo', 'Consolas', 'DejaVu Sans Mono', monospace;
+        color: #aaa;
+        padding: 20px;
+      }
+
+      .portal-container {
+        text-align: center;
+        max-width: 800px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 3rem;
+        letter-spacing: 0.1em;
+      }
+
+      .game-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .game-button {
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        padding: 1.5rem 2rem;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .game-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .game-button:hover::before {
+        opacity: 0.1;
+      }
+
+      .game-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .game-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .game-description {
+        font-size: 0.85rem;
+        opacity: 0.8;
+      }
+
+      /* Rogues Gallery - Classic brown/amber theme */
+      .rogues-gallery {
+        background: linear-gradient(135deg, #2a1a10 0%, #1a1008 100%);
+        border: 2px solid #8b6914;
+        color: #d4a84b;
+      }
+
+      .rogues-gallery:hover {
+        border-color: #d4a84b;
+        background: linear-gradient(135deg, #3a2a18 0%, #2a1a10 100%);
+      }
+
+      .rogues-gallery::before {
+        background: #d4a84b;
+      }
+
+      .rogues-gallery .game-title {
+        color: #ffd700;
+      }
+
+      /* Rogue Tree - Green nature theme */
+      .rogue-tree {
+        background: linear-gradient(135deg, #0a1f0a 0%, #051005 100%);
+        border: 2px solid #2d5a2d;
+        color: #7cb87c;
+      }
+
+      .rogue-tree:hover {
+        border-color: #7cb87c;
+        background: linear-gradient(135deg, #0f2a0f 0%, #0a1f0a 100%);
+      }
+
+      .rogue-tree::before {
+        background: #7cb87c;
+      }
+
+      .rogue-tree .game-title {
+        color: #90ee90;
+      }
+
+      /* Rogue Rift - Space/sci-fi purple/blue theme */
+      .rogue-rift {
+        background: linear-gradient(135deg, #1a0a2a 0%, #0a0515 100%);
+        border: 2px solid #5a2d8a;
+        color: #b87cc8;
+      }
+
+      .rogue-rift:hover {
+        border-color: #b87cc8;
+        background: linear-gradient(135deg, #2a1040 0%, #1a0a2a 100%);
+      }
+
+      .rogue-rift::before {
+        background: #b87cc8;
+      }
+
+      .rogue-rift .game-title {
+        color: #da70d6;
+      }
+
+      .symbol {
+        font-size: 1.2em;
+      }
+
+      footer {
+        margin-top: 3rem;
+        font-size: 0.75rem;
+        color: #444;
+      }
+
+      footer a {
+        color: #666;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        color: #888;
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .game-button {
+          padding: 1.2rem 1.5rem;
+        }
+
+        .game-title {
+          font-size: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="portal-container">
+      <h1>Rogue</h1>
+      <p class="subtitle">Choose Your Adventure</p>
+
+      <div class="game-buttons">
+        <a href="rogues-gallery/" class="game-button rogues-gallery">
+          <div class="game-title">
+            <span class="symbol">@</span> Rogues Gallery
+          </div>
+          <div class="game-description">The classic dungeon crawl. Descend 26 levels to find the Glowing Goblet.</div>
+        </a>
+
+        <a href="rogue-tree/" class="game-button rogue-tree">
+          <div class="game-title">
+            <span class="symbol">@</span> Rogue Tree
+          </div>
+          <div class="game-description">Climb the World Tree. A verdant journey through ancient branches.</div>
+        </a>
+
+        <a href="dimensional-drift/" class="game-button rogue-rift">
+          <div class="game-title">
+            <span class="symbol">@</span> Rogue Rift
+          </div>
+          <div class="game-description">Drift through dimensions. 10 unique realms await the bold traveler.</div>
+        </a>
+      </div>
+
+      <footer>
+        <a href="https://github.com/djessemann/rogue-remake">View on GitHub</a>
+      </footer>
+    </div>
+  </body>
+</html>

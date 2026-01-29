@@ -33,8 +33,12 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Copy game subdirectories to dist
+      - name: Rename portal to index and copy game subdirectories
         run: |
+          # Rename portal.html to index.html for the root
+          mv dist/portal.html dist/index.html
+
+          # Copy pre-built game versions
           if [ -d "dimensional-drift" ]; then
             cp -r dimensional-drift dist/
           fi
