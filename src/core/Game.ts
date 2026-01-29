@@ -955,14 +955,17 @@ export class Game {
   }
 
   private render(): void {
+    // Get the current dimension's background color
+    const palette = getDimensionPalette(this.currentLevelNum);
+    const bgColor = palette.uiBg;
+
+    // Set the display background to match the theme before clearing
+    // This ensures unexplored areas show the themed color instead of black
+    this.display.setBackgroundColor(bgColor);
     this.display.clear();
 
     // Center camera on player
     this.display.centerOn(this.player.x, this.player.y, COLS, MAP_ROWS);
-
-    // Get the current dimension's background color
-    const palette = getDimensionPalette(this.currentLevelNum);
-    const bgColor = palette.uiBg;
 
     // Get viewport bounds for efficient rendering
     const viewport = this.display.getViewportSize();
