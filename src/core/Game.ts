@@ -17,7 +17,7 @@ import { ControlPad, type Direction, type Action } from '../input/ControlPad';
 import { KeyboardInput } from '../input/KeyboardInput';
 import { playerAttack, monsterAttack } from '../systems/Combat';
 import { DIRECTIONS, COLS, MAP_ROWS } from '../constants';
-import { currentTheme, getDimensionName, applyDimensionTheme } from '../theme';
+import { currentTheme, getDimensionName, applyDimensionTheme, getDimensionPalette } from '../theme';
 
 export class Game {
   private display: Display;
@@ -960,6 +960,10 @@ export class Game {
     // Center camera on player
     this.display.centerOn(this.player.x, this.player.y, COLS, MAP_ROWS);
 
+    // Get the current dimension's background color
+    const palette = getDimensionPalette(this.currentLevelNum);
+    const bgColor = palette.uiBg;
+
     // Get viewport bounds for efficient rendering
     const viewport = this.display.getViewportSize();
     const camera = this.display.getCameraPosition();
@@ -991,31 +995,31 @@ export class Game {
                           this.player.status.seeInvisible ||
                           (Math.abs(monster.x - this.player.x) <= 1 && Math.abs(monster.y - this.player.y) <= 1);
             if (canSee) {
-              this.display.drawWorld(x, y, monster.char, monster.color, '#000');
+              this.display.drawWorld(x, y, monster.char, monster.color, bgColor);
             } else {
               // Monster is invisible - show the floor/items underneath
               if (items.length > 0) {
                 const topItem = items[items.length - 1];
-                this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');
+                this.display.drawWorld(x, y, topItem.char, topItem.color, bgColor);
               } else {
-                this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile, this.currentLevelNum), '#000');
+                this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile, this.currentLevelNum), bgColor);
               }
             }
           } else if (items.length > 0) {
             const topItem = items[items.length - 1];
-            this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');
+            this.display.drawWorld(x, y, topItem.char, topItem.color, bgColor);
           } else {
-            this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile, this.currentLevelNum), '#000');
+            this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile, this.currentLevelNum), bgColor);
           }
         } else {
           // Explored but not visible - show in darker color
-          this.display.drawWorld(x, y, getTileChar(tile), '#333', '#000');
+          this.display.drawWorld(x, y, getTileChar(tile), '#333', bgColor);
         }
       }
     }
 
     // Render player
-    this.display.drawWorld(this.player.x, this.player.y, '@', '#ffffff', '#000');
+    this.display.drawWorld(this.player.x, this.player.y, '@', '#ffffff', bgColor);
 
     // Render status bar
     const hungerStatus = this.player.hunger < 50 ? 'Weak' : this.player.hunger < 150 ? 'Hungry' : '';
