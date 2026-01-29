@@ -33,6 +33,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Copy Dimensional Drift to dist
+        run: |
+          if [ -d "dimensional-drift" ]; then
+            cp -r dimensional-drift dist/
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
