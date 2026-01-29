@@ -34,40 +34,6 @@ export class Game {
   private statusBar: HTMLElement;
   private messageLog: HTMLElement;
 
-  /**
-   * Calculate the background color based on current tree level.
-   * Smooth gradient from forest green (level 1) to sky blue (level 26).
-   * Every floor gets progressively lighter and shifts from green to blue.
-   */
-  private getBackgroundForLevel(level: number): string {
-    // Clamp level to 1-26
-    const l = Math.max(1, Math.min(26, level));
-
-    // Linear interpolation from level 1 to 26
-    // t goes from 0 (level 1) to 1 (level 26)
-    const t = (l - 1) / 25;
-
-    // Start color (deep forest green): #142d1e (r:20, g:45, b:30)
-    // End color (sky blue): #3c6470 (r:60, g:100, b:112)
-    const r = Math.round(20 + t * 40);    // 20 -> 60
-    const g = Math.round(45 + t * 55);    // 45 -> 100
-    const b = Math.round(30 + t * 82);    // 30 -> 112
-
-    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-  }
-
-  /**
-   * Get the dimmed background color for explored but not visible areas.
-   */
-  private getDimmedBackground(level: number): string {
-    const bg = this.getBackgroundForLevel(level);
-    // Parse and darken by ~40%
-    const r = Math.round(parseInt(bg.slice(1, 3), 16) * 0.6);
-    const g = Math.round(parseInt(bg.slice(3, 5), 16) * 0.6);
-    const b = Math.round(parseInt(bg.slice(5, 7), 16) * 0.6);
-    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-  }
-
   constructor() {
     // Get containers
     const displayContainer = document.getElementById('display')!;
@@ -109,7 +75,7 @@ export class Game {
     this.spawnEntities();
 
     // Add welcome message
-    this.addMessage("Welcome to the World Tree! Climb to find the Celestial Chalice.");
+    this.addMessage("Welcome to Rogue's Gallery!");
 
     // Initial render
     this.computeFOV();
@@ -394,8 +360,7 @@ export class Game {
     } else if (item.type === 'amulet') {
       this.player.hasAmulet = true;
       this.level.removeItem(this.player.x, this.player.y, item);
-      this.gameOver = true;
-      this.showVictory();
+      this.addMessage('You pick up the Glowing Goblet! Now escape the gallery!');
     } else {
       // Add to inventory
       if (this.player.inventory.length < 23) {
@@ -413,22 +378,41 @@ export class Game {
   private useStairsAuto(): void {
     const tile = this.level.getTile(this.player.x, this.player.y);
     if (tile?.type === 'stairs_down') {
-      this.climbUp();
+      this.useStairs('down');
+    } else if (tile?.type === 'stairs_up') {
+      this.useStairs('up');
     } else {
-      this.addMessage('There is no way to climb here.');
+      this.addMessage('There are no stairs here.');
     }
   }
 
-  private climbUp(): void {
+  private useStairs(direction: 'up' | 'down'): void {
     const tile = this.level.getTile(this.player.x, this.player.y);
 
-    if (!tile || tile.type !== 'stairs_down') {
-      this.addMessage('There is no way to climb here.');
-      return;
+    if (direction === 'down') {
+      if (!tile || tile.type !== 'stairs_down') {
+        this.addMessage('There are no stairs going down here.');
+        return;
+      }
+      this.currentLevelNum++;
+      this.addMessage(`You descend to level ${this.currentLevelNum}.`);
+    } else {
+      if (!tile || tile.type !== 'stairs_up') {
+        this.addMessage('There are no stairs going up here.');
+        return;
+      }
+      if (this.currentLevelNum === 1) {
+        if (this.player.hasAmulet) {
+          this.gameOver = true;
+          this.showVictory();
+          return;
+        }
+        this.addMessage('You cannot leave the dungeon yet!');
+        return;
+      }
+      this.currentLevelNum--;
+      this.addMessage(`You ascend to level ${this.currentLevelNum}.`);
     }
-
-    this.currentLevelNum++;
-    this.addMessage(`You climb higher into the World Tree. (Level ${this.currentLevelNum})`);
 
     // Generate new level
     this.level = this.dungeonGenerator.generate(this.currentLevelNum);
@@ -837,15 +821,15 @@ export class Game {
       modal.id = 'help-modal';
       modal.innerHTML = `
         <h2>How to Play</h2>
-        <p><strong>Goal:</strong> Climb the World Tree and find the Celestial Chalice at the crown!</p>
+        <p><strong>Goal:</strong> Descend through the gallery, find the Glowing Goblet, and return to the surface.</p>
         <p><strong>D-Pad:</strong> Move in 8 directions. Center button waits.</p>
         <p><strong>Action Buttons:</strong></p>
         <p>I - Inventory</p>
         <p>P - Pick up item</p>
-        <p>S - Climb to next level</p>
+        <p>S - Use stairs</p>
         <p>? - This help</p>
         <p><strong>Keyboard:</strong> Arrow keys, numpad, or vi keys (hjkl) for movement.</p>
-        <p><strong>Combat:</strong> Move into creatures to attack.</p>
+        <p><strong>Combat:</strong> Move into monsters to attack.</p>
         <p><strong>Food:</strong> Restores hunger and 25% HP.</p>
         <button class="modal-close-btn">Close</button>
       `;
@@ -873,12 +857,12 @@ export class Game {
       <h2>Game Over</h2>
       <p class="death-reason">${reason}</p>
       <div class="stats">
-        <p>Tree Level Reached: ${this.currentLevelNum}</p>
+        <p>Dungeon Level: ${this.currentLevelNum}</p>
         <p>Character Level: ${this.player.level}</p>
         <p>Gold Collected: ${this.player.gold}</p>
         <p>Experience: ${this.player.exp}</p>
       </div>
-      <button class="restart-btn">Climb Again</button>
+      <button class="restart-btn">Play Again</button>
     `;
 
     modal.querySelector('.restart-btn')!.addEventListener('click', () => {
@@ -899,13 +883,13 @@ export class Game {
 
     modal.innerHTML = `
       <h2>Victory!</h2>
-      <p class="victory-text">You have reached the crown of the World Tree and claimed the Celestial Chalice!</p>
+      <p class="victory-text">You have retrieved the Glowing Goblet and escaped Rogue's Gallery!</p>
       <div class="stats">
         <p>Character Level: ${this.player.level}</p>
         <p>Gold Collected: ${this.player.gold}</p>
         <p>Experience: ${this.player.exp}</p>
       </div>
-      <button class="restart-btn">Climb Again</button>
+      <button class="restart-btn">Play Again</button>
     `;
 
     modal.querySelector('.restart-btn')!.addEventListener('click', () => {
@@ -938,7 +922,7 @@ export class Game {
     this.spawnEntities();
 
     // Welcome message
-    this.addMessage("Welcome to the World Tree! Climb to find the Celestial Chalice.");
+    this.addMessage("Welcome to Rogue's Gallery!");
 
     // Render
     this.computeFOV();
@@ -965,12 +949,6 @@ export class Game {
 
     // Center camera on player
     this.display.centerOn(this.player.x, this.player.y, COLS, MAP_ROWS);
-
-    // Get dynamic background color based on tree level
-    const bgColor = this.getBackgroundForLevel(this.currentLevelNum);
-    const dimmedBgColor = this.getDimmedBackground(this.currentLevelNum);
-    // Dimmed foreground for explored but not visible tiles
-    const dimmedFgColor = '#4a5a48';
 
     // Get viewport bounds for efficient rendering
     const viewport = this.display.getViewportSize();
@@ -1003,31 +981,31 @@ export class Game {
                           this.player.status.seeInvisible ||
                           (Math.abs(monster.x - this.player.x) <= 1 && Math.abs(monster.y - this.player.y) <= 1);
             if (canSee) {
-              this.display.drawWorld(x, y, monster.char, monster.color, bgColor);
+              this.display.drawWorld(x, y, monster.char, monster.color, '#000');
             } else {
               // Monster is invisible - show the floor/items underneath
               if (items.length > 0) {
                 const topItem = items[items.length - 1];
-                this.display.drawWorld(x, y, topItem.char, topItem.color, bgColor);
+                this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');
               } else {
-                this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), bgColor);
+                this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), '#000');
               }
             }
           } else if (items.length > 0) {
             const topItem = items[items.length - 1];
-            this.display.drawWorld(x, y, topItem.char, topItem.color, bgColor);
+            this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');
           } else {
-            this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), bgColor);
+            this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), '#000');
           }
         } else {
-          // Explored but not visible - show in darker/dimmed color
-          this.display.drawWorld(x, y, getTileChar(tile), dimmedFgColor, dimmedBgColor);
+          // Explored but not visible - show in darker color
+          this.display.drawWorld(x, y, getTileChar(tile), '#333', '#000');
         }
       }
     }
 
-    // Render player with a slight glow effect (brighter background)
-    this.display.drawWorld(this.player.x, this.player.y, '@', '#f0f8e0', bgColor);
+    // Render player
+    this.display.drawWorld(this.player.x, this.player.y, '@', '#ffffff', '#000');
 
     // Render status bar
     const hungerStatus = this.player.hunger < 50 ? 'Weak' : this.player.hunger < 150 ? 'Hungry' : '';
