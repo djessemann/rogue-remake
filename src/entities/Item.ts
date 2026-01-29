@@ -126,12 +126,12 @@ const POTION_DISPLAY_COLORS: Record<string, string> = {
   grey: '#999999', clear: '#66ffff', murky: '#886644', golden: '#ffcc00', silver: '#ccccff'
 };
 
-// === ENERGY CRYSTALS (currency) ===
+// === GOLD ===
 export function createGold(x: number, y: number, levelNum: number): Item {
   const value = Math.floor(Math.random() * (50 + 10 * levelNum)) + 2;
   return {
     type: 'gold',
-    name: `${value} energy crystals`,
+    name: `${value} gold pieces`,
     char: '*',
     color: '#ffdd00',
     x,
@@ -140,11 +140,11 @@ export function createGold(x: number, y: number, levelNum: number): Item {
   };
 }
 
-// === RATION PACK ===
+// === FOOD ===
 export function createFood(x: number, y: number): Item {
   return {
     type: 'food',
-    name: 'ration pack',
+    name: 'some food',
     char: ':',
     color: '#cc6633',
     x,
@@ -181,14 +181,14 @@ export function createArmor(x: number, y: number, name: string, bonus: number = 
   };
 }
 
-// === COMPOUNDS (potions) ===
+// === POTIONS ===
 export function createPotion(x: number, y: number, effect: PotionEffect, appearances: ItemAppearances): Item {
   const color = appearances.potionColors.get(effect) || 'clear';
   const identified = appearances.identified.potions.has(effect);
 
   return {
     type: 'potion',
-    name: identified ? formatCompoundName(effect) : `${color} compound`,
+    name: identified ? `potion of ${formatEffectName(effect)}` : `${color} potion`,
     char: '!',
     color: POTION_DISPLAY_COLORS[color] || '#f0f',
     x,
@@ -213,14 +213,14 @@ export function getRandomPotionEffect(): PotionEffect {
   return 'healing';
 }
 
-// === DATA CHIPS (scrolls) ===
+// === SCROLLS ===
 export function createScroll(x: number, y: number, effect: ScrollEffect, appearances: ItemAppearances): Item {
   const title = appearances.scrollTitles.get(effect) || 'UNKNOWN';
   const identified = appearances.identified.scrolls.has(effect);
 
   return {
     type: 'scroll',
-    name: identified ? formatChipName(effect) : `data chip "${title}"`,
+    name: identified ? `scroll of ${formatEffectName(effect)}` : `scroll titled "${title}"`,
     char: '?',
     color: '#ffffff',
     x,
@@ -244,7 +244,7 @@ export function getRandomScrollEffect(): ScrollEffect {
   return 'identify';
 }
 
-// === IMPLANTS (rings) ===
+// === RINGS ===
 export function createRing(x: number, y: number, effect: RingEffect, appearances: ItemAppearances, bonus: number = 0): Item {
   const gem = appearances.ringGems.get(effect) || 'plain';
   const identified = appearances.identified.rings.has(effect);
@@ -253,10 +253,10 @@ export function createRing(x: number, y: number, effect: RingEffect, appearances
 
   let name: string;
   if (identified) {
-    name = formatImplantName(effect);
+    name = `ring of ${formatEffectName(effect)}`;
     if (actualBonus !== 0) name = `${actualBonus > 0 ? '+' : ''}${actualBonus} ${name}`;
   } else {
-    name = `${gem} implant`;
+    name = `${gem} ring`;
   }
 
   return {
@@ -280,7 +280,7 @@ export function getRandomRingEffect(): RingEffect {
   return effects[Math.floor(Math.random() * effects.length)];
 }
 
-// === DEVICES (wands) ===
+// === WANDS ===
 export function createWand(x: number, y: number, effect: WandEffect, appearances: ItemAppearances): Item {
   const material = appearances.wandMaterials.get(effect) || 'wooden';
   const identified = appearances.identified.wands.has(effect);
@@ -288,7 +288,7 @@ export function createWand(x: number, y: number, effect: WandEffect, appearances
 
   return {
     type: 'wand',
-    name: identified ? formatDeviceName(effect) : `${material} device`,
+    name: identified ? `wand of ${formatEffectName(effect)}` : `${material} wand`,
     char: '/',
     color: '#88ff00',
     x,
@@ -306,11 +306,11 @@ export function getRandomWandEffect(): WandEffect {
   return effects[Math.floor(Math.random() * effects.length)];
 }
 
-// === WARP CORE ===
+// === GOBLET ===
 export function createAmulet(x: number, y: number): Item {
   return {
     type: 'amulet',
-    name: 'The Warp Core',
+    name: 'The Glowing Goblet',
     char: 'U',
     color: '#ffcc00',
     x,
@@ -326,78 +326,6 @@ function formatEffectName(effect: string): string {
   return effect.replace(/([A-Z])/g, ' $1').toLowerCase().trim();
 }
 
-// Compound (potion) names - sci-fi themed
-const COMPOUND_NAMES: Record<PotionEffect, string> = {
-  healing: 'med-gel',
-  extraHealing: 'trauma patch',
-  poison: 'toxic compound',
-  strength: 'stim-shot',
-  restoreStrength: 'purifier',
-  confusion: 'neural disruptor',
-  blindness: 'optic scrambler',
-  seeInvisible: 'phase lens serum',
-  levelUp: 'cognition boost',
-  paralysis: 'nerve agent',
-};
-
-function formatCompoundName(effect: PotionEffect): string {
-  return COMPOUND_NAMES[effect] || formatEffectName(effect);
-}
-
-// Data chip (scroll) names - sci-fi themed
-const CHIP_NAMES: Record<ScrollEffect, string> = {
-  identify: 'analysis chip',
-  teleport: 'blink module',
-  removeCurse: 'debug patch',
-  enchantWeapon: 'weapon mod chip',
-  enchantArmor: 'armor mod chip',
-  sleep: 'sedation chip',
-  scare: 'fear emitter',
-  magicMapping: 'zone scanner',
-  aggravate: 'signal flare',
-  createMonster: 'spawn beacon',
-};
-
-function formatChipName(effect: ScrollEffect): string {
-  return CHIP_NAMES[effect] || formatEffectName(effect);
-}
-
-// Implant (ring) names - sci-fi themed
-const IMPLANT_NAMES: Record<RingEffect, string> = {
-  protection: 'shield implant',
-  strength: 'power implant',
-  sustenance: 'metabolism regulator',
-  regeneration: 'nano-repair system',
-  slowDigestion: 'energy optimizer',
-  searching: 'sensor array',
-  seeInvisible: 'phase detector',
-  stealth: 'cloak module',
-  teleportation: 'random blink implant',
-  dexterity: 'reflex booster',
-};
-
-function formatImplantName(effect: RingEffect): string {
-  return IMPLANT_NAMES[effect] || formatEffectName(effect);
-}
-
-// Device (wand) names - sci-fi themed
-const DEVICE_NAMES: Record<WandEffect, string> = {
-  light: 'flare launcher',
-  lightning: 'arc caster',
-  fire: 'thermal ray',
-  cold: 'cryo beam',
-  polymorph: 'gene scrambler',
-  magicMissile: 'plasma bolt gun',
-  slow: 'stasis field emitter',
-  teleportAway: 'blink gun',
-  cancellation: 'nullifier',
-  drain: 'life tap',
-};
-
-function formatDeviceName(effect: WandEffect): string {
-  return DEVICE_NAMES[effect] || formatEffectName(effect);
-}
-
 export function getItemDisplayName(item: Item, appearances?: ItemAppearances): string {
   if (item.identified || !appearances) {
     return item.name;
@@ -406,19 +334,19 @@ export function getItemDisplayName(item: Item, appearances?: ItemAppearances): s
   // Return unidentified name based on type
   if (item.type === 'potion' && item.effect) {
     const color = appearances.potionColors.get(item.effect as PotionEffect);
-    return `${color} compound`;
+    return `${color} potion`;
   }
   if (item.type === 'scroll' && item.effect) {
     const title = appearances.scrollTitles.get(item.effect as ScrollEffect);
-    return `data chip "${title}"`;
+    return `scroll titled "${title}"`;
   }
   if (item.type === 'ring' && item.effect) {
     const gem = appearances.ringGems.get(item.effect as RingEffect);
-    return `${gem} implant`;
+    return `${gem} ring`;
   }
   if (item.type === 'wand' && item.effect) {
     const material = appearances.wandMaterials.get(item.effect as WandEffect);
-    return `${material} device`;
+    return `${material} wand`;
   }
 
   return item.name;
@@ -429,21 +357,21 @@ export function identifyItem(item: Item, appearances: ItemAppearances): void {
 
   if (item.type === 'potion' && item.effect) {
     appearances.identified.potions.add(item.effect as PotionEffect);
-    item.name = formatCompoundName(item.effect as PotionEffect);
+    item.name = `potion of ${formatEffectName(item.effect)}`;
   }
   if (item.type === 'scroll' && item.effect) {
     appearances.identified.scrolls.add(item.effect as ScrollEffect);
-    item.name = formatChipName(item.effect as ScrollEffect);
+    item.name = `scroll of ${formatEffectName(item.effect)}`;
   }
   if (item.type === 'ring' && item.effect) {
     appearances.identified.rings.add(item.effect as RingEffect);
-    let name = formatImplantName(item.effect as RingEffect);
+    let name = `ring of ${formatEffectName(item.effect)}`;
     if (item.bonus) name = `${item.bonus > 0 ? '+' : ''}${item.bonus} ${name}`;
     item.name = name;
   }
   if (item.type === 'wand' && item.effect) {
     appearances.identified.wands.add(item.effect as WandEffect);
-    item.name = formatDeviceName(item.effect as WandEffect);
+    item.name = `wand of ${formatEffectName(item.effect)}`;
   }
 }
 
