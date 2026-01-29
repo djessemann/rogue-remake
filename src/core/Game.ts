@@ -76,7 +76,7 @@ export class Game {
     this.spawnEntities();
 
     // Add welcome message
-    this.addMessage("Welcome to Rogue's Gallery!");
+    this.addMessage(`Welcome to ${currentTheme.name}!`);
 
     // Initial render
     this.computeFOV();
@@ -396,7 +396,7 @@ export class Game {
         return;
       }
       this.currentLevelNum++;
-      this.addMessage(`You descend to level ${this.currentLevelNum}.`);
+      this.addMessage(`You descend to ${currentTheme.levelWord} ${this.currentLevelNum}.`);
     } else {
       if (!tile || tile.type !== 'stairs_up') {
         this.addMessage('There are no stairs going up here.');
@@ -408,11 +408,11 @@ export class Game {
           this.showVictory();
           return;
         }
-        this.addMessage('You cannot leave the dungeon yet!');
+        this.addMessage(`You cannot leave the ${currentTheme.locationName} yet!`);
         return;
       }
       this.currentLevelNum--;
-      this.addMessage(`You ascend to level ${this.currentLevelNum}.`);
+      this.addMessage(`You ascend to ${currentTheme.levelWord} ${this.currentLevelNum}.`);
     }
 
     // Generate new level
@@ -923,7 +923,7 @@ export class Game {
     this.spawnEntities();
 
     // Welcome message
-    this.addMessage("Welcome to Rogue's Gallery!");
+    this.addMessage(`Welcome to ${currentTheme.name}!`);
 
     // Render
     this.computeFOV();
