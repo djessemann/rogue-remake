@@ -1,3 +1,5 @@
+import { getDimensionPalette } from '../theme';
+
 export type TileType = 'floor' | 'wall' | 'corridor' | 'door' | 'stairs_down' | 'stairs_up' | 'void';
 
 export interface Tile {
@@ -32,14 +34,16 @@ export function getTileChar(tile: Tile): string {
   }
 }
 
-export function getTileColor(tile: Tile): string {
+export function getTileColor(tile: Tile, levelNum: number = 1): string {
+  const palette = getDimensionPalette(levelNum);
+
   switch (tile.type) {
-    case 'floor': return '#808080';
-    case 'wall': return '#c9a090';
-    case 'corridor': return '#c9a090';
-    case 'door': return '#b0a090';
-    case 'stairs_down': return '#a0e0f0';
-    case 'stairs_up': return '#a0e0f0';
+    case 'floor': return palette.floor;
+    case 'wall': return palette.wall;
+    case 'corridor': return palette.corridor;
+    case 'door': return palette.door;
+    case 'stairs_down': return palette.stairs;
+    case 'stairs_up': return palette.stairs;
     case 'void': return '#000';
     default: return '#b0b0b0';
   }

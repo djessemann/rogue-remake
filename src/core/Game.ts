@@ -17,7 +17,7 @@ import { ControlPad, type Direction, type Action } from '../input/ControlPad';
 import { KeyboardInput } from '../input/KeyboardInput';
 import { playerAttack, monsterAttack } from '../systems/Combat';
 import { DIRECTIONS, COLS, MAP_ROWS } from '../constants';
-import { currentTheme } from '../theme';
+import { currentTheme, getDimensionName } from '../theme';
 
 export class Game {
   private display: Display;
@@ -396,7 +396,7 @@ export class Game {
         return;
       }
       this.currentLevelNum++;
-      this.addMessage(`You descend to ${currentTheme.levelWord} ${this.currentLevelNum}.`);
+      this.addMessage(`You drift into ${getDimensionName(this.currentLevelNum)}.`);
     } else {
       if (!tile || tile.type !== 'stairs_up') {
         this.addMessage('There are no stairs going up here.');
@@ -412,7 +412,7 @@ export class Game {
         return;
       }
       this.currentLevelNum--;
-      this.addMessage(`You ascend to ${currentTheme.levelWord} ${this.currentLevelNum}.`);
+      this.addMessage(`You drift back to ${getDimensionName(this.currentLevelNum)}.`);
     }
 
     // Generate new level
@@ -989,14 +989,14 @@ export class Game {
                 const topItem = items[items.length - 1];
                 this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');
               } else {
-                this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), '#000');
+                this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile, this.currentLevelNum), '#000');
               }
             }
           } else if (items.length > 0) {
             const topItem = items[items.length - 1];
             this.display.drawWorld(x, y, topItem.char, topItem.color, '#000');
           } else {
-            this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), '#000');
+            this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile, this.currentLevelNum), '#000');
           }
         } else {
           // Explored but not visible - show in darker color

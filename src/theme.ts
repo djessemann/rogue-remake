@@ -207,3 +207,56 @@ export function getThemedWeaponName(classicName: string): string {
 export function getThemedArmorName(classicName: string): string {
   return currentTheme.armor[classicName] || classicName;
 }
+
+// === DIMENSION COLOR PALETTES (Rift theme only) ===
+// Each dimension has a unique color scheme for floor, wall, and accent
+export interface DimensionPalette {
+  name: string;
+  floor: string;
+  wall: string;
+  corridor: string;
+  door: string;
+  stairs: string;
+}
+
+const dimensionPalettes: DimensionPalette[] = [
+  { name: 'Verdant Sprawl',  floor: '#2d5a2d', wall: '#1a3d1a', corridor: '#1a3d1a', door: '#4a7a4a', stairs: '#90ee90' },
+  { name: 'Crimson Wastes',  floor: '#8b2500', wall: '#5c1a1a', corridor: '#5c1a1a', door: '#a04040', stairs: '#ff6b6b' },
+  { name: 'Frozen Void',     floor: '#4a6a8a', wall: '#2a4a6a', corridor: '#2a4a6a', door: '#6a8aaa', stairs: '#a0e0f0' },
+  { name: 'Amber Hive',      floor: '#8b7500', wall: '#5c4a00', corridor: '#5c4a00', door: '#a08520', stairs: '#ffd700' },
+  { name: 'Violet Abyss',    floor: '#5a2d6a', wall: '#3a1a4a', corridor: '#3a1a4a', door: '#7a4d8a', stairs: '#da70d6' },
+  { name: 'Molten Core',     floor: '#8b4500', wall: '#5c2a00', corridor: '#5c2a00', door: '#a06520', stairs: '#ff8c00' },
+  { name: 'Silver Static',   floor: '#606068', wall: '#404048', corridor: '#404048', door: '#808088', stairs: '#c0c0c0' },
+  { name: 'Coral Depths',    floor: '#2a6a6a', wall: '#1a4a4a', corridor: '#1a4a4a', door: '#4a8a8a', stairs: '#40e0d0' },
+  { name: 'Golden Citadel',  floor: '#8b7a30', wall: '#5c5020', corridor: '#5c5020', door: '#a09040', stairs: '#ffd700' },
+  { name: 'White Rift',      floor: '#707080', wall: '#505060', corridor: '#505060', door: '#909098', stairs: '#e0e0f0' },
+];
+
+// Classic theme uses static colors
+const classicPalette: DimensionPalette = {
+  name: 'Gallery',
+  floor: '#808080',
+  wall: '#c9a090',
+  corridor: '#c9a090',
+  door: '#b0a090',
+  stairs: '#a0e0f0',
+};
+
+// Get the palette for a given level number
+export function getDimensionPalette(levelNum: number): DimensionPalette {
+  if (getThemeType() === 'classic') {
+    return classicPalette;
+  }
+  // Rift theme: cycle through 10 dimensions
+  const index = (levelNum - 1) % dimensionPalettes.length;
+  return dimensionPalettes[index];
+}
+
+// Get dimension name for display
+export function getDimensionName(levelNum: number): string {
+  if (getThemeType() === 'classic') {
+    return `Level ${levelNum}`;
+  }
+  const palette = getDimensionPalette(levelNum);
+  return `${palette.name} (Dimension ${levelNum})`;
+}
