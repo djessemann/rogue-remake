@@ -35,25 +35,52 @@ export class Game {
   private messageLog: HTMLElement;
 
   /**
-   * Calculate the background color based on current tree level.
-   * Smooth gradient from forest green (level 1) to sky blue (level 26).
-   * Every floor gets progressively lighter and shifts from green to blue.
+   * Dimension palettes - each dimension has a distinct, striking color scheme.
+   * Each palette: [background, floor, wall]
+   */
+  private readonly DIMENSION_PALETTES: Record<number, { bg: string; floor: string; wall: string; name: string }> = {
+    1:  { bg: '#0a1f0a', floor: '#3d6b4a', wall: '#1a3d1f', name: 'The Verdant Sprawl' },      // Home - overgrown jungle
+    2:  { bg: '#2a0a0a', floor: '#8a3030', wall: '#4a1515', name: 'The Crimson Wastes' },      // Mars-like desolation
+    3:  { bg: '#0a1525', floor: '#4a7a9a', wall: '#1a3545', name: 'The Frozen Void' },         // Cryo-dimension
+    4:  { bg: '#251a05', floor: '#9a7a30', wall: '#4a3a15', name: 'The Amber Hive' },          // Insectoid realm
+    5:  { bg: '#150a20', floor: '#6a4a8a', wall: '#351a45', name: 'The Violet Abyss' },        // Psychic dimension
+    6:  { bg: '#200a00', floor: '#aa5500', wall: '#551a00', name: 'The Molten Core' },         // Volcanic hellscape
+    7:  { bg: '#151515', floor: '#7a7a7a', wall: '#3a3a3a', name: 'The Silver Static' },       // Glitched reality
+    8:  { bg: '#0a1515', floor: '#4a8a7a', wall: '#1a4a40', name: 'The Coral Depths' },        // Underwater alien
+    9:  { bg: '#1a1505', floor: '#aa9a40', wall: '#554a1a', name: 'The Golden Citadel' },      // Ancient tech
+    10: { bg: '#101520', floor: '#9090a0', wall: '#505060', name: 'The White Rift' },          // Edge of existence
+  };
+
+  /**
+   * Get the background color for the current dimension.
    */
   private getBackgroundForLevel(level: number): string {
-    // Clamp level to 1-26
-    const l = Math.max(1, Math.min(26, level));
+    const l = Math.max(1, Math.min(10, level));
+    return this.DIMENSION_PALETTES[l].bg;
+  }
 
-    // Linear interpolation from level 1 to 26
-    // t goes from 0 (level 1) to 1 (level 26)
-    const t = (l - 1) / 25;
+  /**
+   * Get the floor tile color for the current dimension.
+   */
+  private getFloorColorForLevel(level: number): string {
+    const l = Math.max(1, Math.min(10, level));
+    return this.DIMENSION_PALETTES[l].floor;
+  }
 
-    // Start color (deep forest green): #142d1e (r:20, g:45, b:30)
-    // End color (sky blue): #3c6470 (r:60, g:100, b:112)
-    const r = Math.round(20 + t * 40);    // 20 -> 60
-    const g = Math.round(45 + t * 55);    // 45 -> 100
-    const b = Math.round(30 + t * 82);    // 30 -> 112
+  /**
+   * Get the wall tile color for the current dimension.
+   */
+  private getWallColorForLevel(level: number): string {
+    const l = Math.max(1, Math.min(10, level));
+    return this.DIMENSION_PALETTES[l].wall;
+  }
 
-    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+  /**
+   * Get the dimension name.
+   */
+  private getDimensionName(level: number): string {
+    const l = Math.max(1, Math.min(10, level));
+    return this.DIMENSION_PALETTES[l].name;
   }
 
   /**
@@ -65,6 +92,16 @@ export class Game {
     const r = Math.round(parseInt(bg.slice(1, 3), 16) * 0.6);
     const g = Math.round(parseInt(bg.slice(3, 5), 16) * 0.6);
     const b = Math.round(parseInt(bg.slice(5, 7), 16) * 0.6);
+    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+  }
+
+  /**
+   * Get the dimmed floor/wall color for explored but not visible areas.
+   */
+  private getDimmedTileColor(color: string): string {
+    const r = Math.round(parseInt(color.slice(1, 3), 16) * 0.5);
+    const g = Math.round(parseInt(color.slice(3, 5), 16) * 0.5);
+    const b = Math.round(parseInt(color.slice(5, 7), 16) * 0.5);
     return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
   }
 
@@ -109,7 +146,7 @@ export class Game {
     this.spawnEntities();
 
     // Add welcome message
-    this.addMessage("Welcome to the World Tree! Climb to find the Celestial Chalice.");
+    this.addMessage("Dimensional breach detected. Locate your Warp Core to return home.");
 
     // Initial render
     this.computeFOV();
@@ -192,8 +229,8 @@ export class Game {
       }
     }
 
-    // Spawn Amulet of Yendor on level 26
-    if (this.currentLevelNum === 26) {
+    // Spawn Warp Core on dimension 10
+    if (this.currentLevelNum === 10) {
       const room = this.level.rooms[Math.floor(Math.random() * this.level.rooms.length)];
       const x = room.x + Math.floor(Math.random() * room.width);
       const y = room.y + Math.floor(Math.random() * room.height);
@@ -202,10 +239,10 @@ export class Game {
       }
     }
 
-    // Starting weapon for level 1
+    // Starting equipment for dimension 1
     if (this.currentLevelNum === 1) {
-      this.player.weapon = createWeapon(0, 0, 'mace', 1);
-      this.player.wornArmor = createArmor(0, 0, 'ring mail', 3);
+      this.player.weapon = createWeapon(0, 0, 'stun baton', 1);
+      this.player.wornArmor = createArmor(0, 0, 'mesh armor', 3);
       this.player.armor = 7 + 3; // Base armor + bonus
     }
   }
@@ -390,7 +427,7 @@ export class Game {
       const hpRestore = Math.floor(this.player.maxHp * 0.25);
       this.player.hp = Math.min(this.player.maxHp, this.player.hp + hpRestore);
       this.level.removeItem(this.player.x, this.player.y, item);
-      this.addMessage(`You eat the food. Yum! (+${hpRestore} HP)`);
+      this.addMessage(`You consume the ration pack. (+${hpRestore} HP)`);
     } else if (item.type === 'amulet') {
       this.player.hasAmulet = true;
       this.level.removeItem(this.player.x, this.player.y, item);
@@ -428,7 +465,7 @@ export class Game {
     }
 
     this.currentLevelNum++;
-    this.addMessage(`You climb higher into the World Tree. (Level ${this.currentLevelNum})`);
+    this.addMessage(`You enter the wormhole... ${this.getDimensionName(this.currentLevelNum)} (Dimension ${this.currentLevelNum})`);
 
     // Generate new level
     this.level = this.dungeonGenerator.generate(this.currentLevelNum);
@@ -506,21 +543,21 @@ export class Game {
       }
     }
 
-    // Update hunger (faster on deeper levels)
-    const hungerDrain = 1 + Math.floor(this.currentLevelNum / 10);
+    // Update power reserve (faster drain in deeper dimensions)
+    const hungerDrain = 1 + Math.floor(this.currentLevelNum / 4);
     this.player.hunger -= hungerDrain;
     if (this.player.hunger <= 0 && !this.gameOver) {
       this.player.hp -= 1;
       if (this.player.hp <= 0) {
         this.gameOver = true;
-        this.showGameOver('You starved to death!');
+        this.showGameOver('Life support failure!');
       } else if (this.player.hunger === 0) {
-        this.addMessage('You are starving!');
+        this.addMessage('CRITICAL: Life support failing!');
       }
     } else if (this.player.hunger === 150) {
-      this.addMessage('You are getting hungry.');
+      this.addMessage('Warning: Power reserve low.');
     } else if (this.player.hunger === 50) {
-      this.addMessage('You are weak from hunger.');
+      this.addMessage('ALERT: Suit power critical!');
     }
 
     this.computeFOV();
@@ -680,7 +717,7 @@ export class Game {
       const hpRestore = Math.floor(this.player.maxHp * 0.25);
       this.player.hp = Math.min(this.player.maxHp, this.player.hp + hpRestore);
       this.player.inventory.splice(index, 1);
-      this.addMessage(`You eat the food. Yum! (+${hpRestore} HP)`);
+      this.addMessage(`You consume the ration pack. (+${hpRestore} HP)`);
       this.endTurn();
     }
   }
@@ -837,16 +874,16 @@ export class Game {
       modal.id = 'help-modal';
       modal.innerHTML = `
         <h2>How to Play</h2>
-        <p><strong>Goal:</strong> Climb the World Tree and find the Celestial Chalice at the crown!</p>
+        <p><strong>Goal:</strong> You are stranded between dimensions. Find your Warp Core in Dimension 10 and return home!</p>
         <p><strong>D-Pad:</strong> Move in 8 directions. Center button waits.</p>
         <p><strong>Action Buttons:</strong></p>
         <p>I - Inventory</p>
         <p>P - Pick up item</p>
-        <p>S - Climb to next level</p>
+        <p>S - Enter wormhole</p>
         <p>? - This help</p>
         <p><strong>Keyboard:</strong> Arrow keys, numpad, or vi keys (hjkl) for movement.</p>
-        <p><strong>Combat:</strong> Move into creatures to attack.</p>
-        <p><strong>Food:</strong> Restores hunger and 25% HP.</p>
+        <p><strong>Combat:</strong> Move into entities to attack.</p>
+        <p><strong>Rations:</strong> Restores suit power and 25% HP.</p>
         <button class="modal-close-btn">Close</button>
       `;
       document.body.appendChild(modal);
@@ -870,15 +907,15 @@ export class Game {
     }
 
     modal.innerHTML = `
-      <h2>Game Over</h2>
+      <h2>Mission Failed</h2>
       <p class="death-reason">${reason}</p>
       <div class="stats">
-        <p>Tree Level Reached: ${this.currentLevelNum}</p>
-        <p>Character Level: ${this.player.level}</p>
-        <p>Gold Collected: ${this.player.gold}</p>
+        <p>Dimension Reached: ${this.currentLevelNum}</p>
+        <p>Traveler Level: ${this.player.level}</p>
+        <p>Crystals Collected: ${this.player.gold}</p>
         <p>Experience: ${this.player.exp}</p>
       </div>
-      <button class="restart-btn">Climb Again</button>
+      <button class="restart-btn">Try Again</button>
     `;
 
     modal.querySelector('.restart-btn')!.addEventListener('click', () => {
@@ -898,14 +935,14 @@ export class Game {
     }
 
     modal.innerHTML = `
-      <h2>Victory!</h2>
-      <p class="victory-text">You have reached the crown of the World Tree and claimed the Celestial Chalice!</p>
+      <h2>Mission Complete!</h2>
+      <p class="victory-text">You have recovered the Warp Core and can finally return home!</p>
       <div class="stats">
-        <p>Character Level: ${this.player.level}</p>
-        <p>Gold Collected: ${this.player.gold}</p>
+        <p>Traveler Level: ${this.player.level}</p>
+        <p>Crystals Collected: ${this.player.gold}</p>
         <p>Experience: ${this.player.exp}</p>
       </div>
-      <button class="restart-btn">Climb Again</button>
+      <button class="restart-btn">Drift Again</button>
     `;
 
     modal.querySelector('.restart-btn')!.addEventListener('click', () => {
@@ -938,7 +975,7 @@ export class Game {
     this.spawnEntities();
 
     // Welcome message
-    this.addMessage("Welcome to the World Tree! Climb to find the Celestial Chalice.");
+    this.addMessage("Dimensional breach detected. Locate your Warp Core to return home.");
 
     // Render
     this.computeFOV();
@@ -966,11 +1003,13 @@ export class Game {
     // Center camera on player
     this.display.centerOn(this.player.x, this.player.y, COLS, MAP_ROWS);
 
-    // Get dynamic background color based on tree level
+    // Get dynamic colors based on current dimension
     const bgColor = this.getBackgroundForLevel(this.currentLevelNum);
     const dimmedBgColor = this.getDimmedBackground(this.currentLevelNum);
-    // Dimmed foreground for explored but not visible tiles
-    const dimmedFgColor = '#4a5a48';
+    const floorColor = this.getFloorColorForLevel(this.currentLevelNum);
+    const wallColor = this.getWallColorForLevel(this.currentLevelNum);
+    const dimmedFloorColor = this.getDimmedTileColor(floorColor);
+    const dimmedWallColor = this.getDimmedTileColor(wallColor);
 
     // Get viewport bounds for efficient rendering
     const viewport = this.display.getViewportSize();
@@ -995,6 +1034,15 @@ export class Game {
         const items = this.level.getItems(x, y);
         const monster = this.level.getMonsterAt(x, y);
 
+        // Get the dimension-appropriate tile color
+        const tileColor = (tile.type === 'floor' || tile.type === 'corridor') ? floorColor :
+                         (tile.type === 'wall') ? wallColor :
+                         (tile.type === 'stairs_down' || tile.type === 'stairs_up') ? '#90d8b0' :
+                         getTileColor(tile);
+        const dimmedTileColor = (tile.type === 'floor' || tile.type === 'corridor') ? dimmedFloorColor :
+                               (tile.type === 'wall') ? dimmedWallColor :
+                               this.getDimmedTileColor(tileColor);
+
         if (isVisible) {
           if (monster) {
             // Check if monster is invisible
@@ -1010,18 +1058,18 @@ export class Game {
                 const topItem = items[items.length - 1];
                 this.display.drawWorld(x, y, topItem.char, topItem.color, bgColor);
               } else {
-                this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), bgColor);
+                this.display.drawWorld(x, y, getTileChar(tile), tileColor, bgColor);
               }
             }
           } else if (items.length > 0) {
             const topItem = items[items.length - 1];
             this.display.drawWorld(x, y, topItem.char, topItem.color, bgColor);
           } else {
-            this.display.drawWorld(x, y, getTileChar(tile), getTileColor(tile), bgColor);
+            this.display.drawWorld(x, y, getTileChar(tile), tileColor, bgColor);
           }
         } else {
           // Explored but not visible - show in darker/dimmed color
-          this.display.drawWorld(x, y, getTileChar(tile), dimmedFgColor, dimmedBgColor);
+          this.display.drawWorld(x, y, getTileChar(tile), dimmedTileColor, dimmedBgColor);
         }
       }
     }
@@ -1030,15 +1078,15 @@ export class Game {
     this.display.drawWorld(this.player.x, this.player.y, '@', '#f0f8e0', bgColor);
 
     // Render status bar
-    const hungerStatus = this.player.hunger < 50 ? 'Weak' : this.player.hunger < 150 ? 'Hungry' : '';
+    const powerStatus = this.player.hunger < 50 ? 'CRITICAL' : this.player.hunger < 150 ? 'LOW PWR' : '';
     this.statusBar.innerHTML = `
-      <span>Lv:${this.currentLevelNum}</span>
+      <span>Dim:${this.currentLevelNum}</span>
       <span>HP:${this.player.hp}/${this.player.maxHp}</span>
       <span>Str:${this.player.strength}</span>
       <span>Def:${this.player.armor}</span>
       <span>Exp:${this.player.exp}</span>
-      <span>Gold:${this.player.gold}</span>
-      ${hungerStatus ? `<span class="status-warning">${hungerStatus}</span>` : ''}
+      <span>Crys:${this.player.gold}</span>
+      ${powerStatus ? `<span class="status-warning">${powerStatus}</span>` : ''}
     `;
   }
 }
