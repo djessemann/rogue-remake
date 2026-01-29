@@ -17,6 +17,7 @@ import { ControlPad, type Direction, type Action } from '../input/ControlPad';
 import { KeyboardInput } from '../input/KeyboardInput';
 import { playerAttack, monsterAttack } from '../systems/Combat';
 import { DIRECTIONS, COLS, MAP_ROWS } from '../constants';
+import { currentTheme } from '../theme';
 
 export class Game {
   private display: Display;
@@ -75,7 +76,7 @@ export class Game {
     this.spawnEntities();
 
     // Add welcome message
-    this.addMessage("Welcome to Rogue's Gallery!");
+    this.addMessage(`Welcome to ${currentTheme.name}!`);
 
     // Initial render
     this.computeFOV();
@@ -360,7 +361,7 @@ export class Game {
     } else if (item.type === 'amulet') {
       this.player.hasAmulet = true;
       this.level.removeItem(this.player.x, this.player.y, item);
-      this.addMessage('You pick up the Glowing Goblet! Now escape the gallery!');
+      this.addMessage(`You pick up ${currentTheme.goalItem}! Now escape the ${currentTheme.locationName}!`);
     } else {
       // Add to inventory
       if (this.player.inventory.length < 23) {
@@ -395,7 +396,7 @@ export class Game {
         return;
       }
       this.currentLevelNum++;
-      this.addMessage(`You descend to level ${this.currentLevelNum}.`);
+      this.addMessage(`You descend to ${currentTheme.levelWord} ${this.currentLevelNum}.`);
     } else {
       if (!tile || tile.type !== 'stairs_up') {
         this.addMessage('There are no stairs going up here.');
@@ -407,11 +408,11 @@ export class Game {
           this.showVictory();
           return;
         }
-        this.addMessage('You cannot leave the dungeon yet!');
+        this.addMessage(`You cannot leave the ${currentTheme.locationName} yet!`);
         return;
       }
       this.currentLevelNum--;
-      this.addMessage(`You ascend to level ${this.currentLevelNum}.`);
+      this.addMessage(`You ascend to ${currentTheme.levelWord} ${this.currentLevelNum}.`);
     }
 
     // Generate new level
@@ -821,7 +822,7 @@ export class Game {
       modal.id = 'help-modal';
       modal.innerHTML = `
         <h2>How to Play</h2>
-        <p><strong>Goal:</strong> Descend through the gallery, find the Glowing Goblet, and return to the surface.</p>
+        <p><strong>Goal:</strong> ${currentTheme.helpGoalText}</p>
         <p><strong>D-Pad:</strong> Move in 8 directions. Center button waits.</p>
         <p><strong>Action Buttons:</strong></p>
         <p>I - Inventory</p>
@@ -857,9 +858,9 @@ export class Game {
       <h2>Game Over</h2>
       <p class="death-reason">${reason}</p>
       <div class="stats">
-        <p>Dungeon Level: ${this.currentLevelNum}</p>
+        <p>${currentTheme.levelWord}: ${this.currentLevelNum}</p>
         <p>Character Level: ${this.player.level}</p>
-        <p>Gold Collected: ${this.player.gold}</p>
+        <p>${currentTheme.goldName.charAt(0).toUpperCase() + currentTheme.goldName.slice(1)} Collected: ${this.player.gold}</p>
         <p>Experience: ${this.player.exp}</p>
       </div>
       <button class="restart-btn">Play Again</button>
@@ -882,11 +883,11 @@ export class Game {
     }
 
     modal.innerHTML = `
-      <h2>Victory!</h2>
-      <p class="victory-text">You have retrieved the Glowing Goblet and escaped Rogue's Gallery!</p>
+      <h2>${currentTheme.victoryTitle}</h2>
+      <p class="victory-text">${currentTheme.victoryMessage}</p>
       <div class="stats">
         <p>Character Level: ${this.player.level}</p>
-        <p>Gold Collected: ${this.player.gold}</p>
+        <p>${currentTheme.goldName.charAt(0).toUpperCase() + currentTheme.goldName.slice(1)} Collected: ${this.player.gold}</p>
         <p>Experience: ${this.player.exp}</p>
       </div>
       <button class="restart-btn">Play Again</button>
@@ -922,7 +923,7 @@ export class Game {
     this.spawnEntities();
 
     // Welcome message
-    this.addMessage("Welcome to Rogue's Gallery!");
+    this.addMessage(`Welcome to ${currentTheme.name}!`);
 
     // Render
     this.computeFOV();
@@ -1009,13 +1010,14 @@ export class Game {
 
     // Render status bar
     const hungerStatus = this.player.hunger < 50 ? 'Weak' : this.player.hunger < 150 ? 'Hungry' : '';
+    const goldLabel = currentTheme.goldName === 'credits' ? 'Cr' : 'Gold';
     this.statusBar.innerHTML = `
       <span>Lv:${this.currentLevelNum}</span>
       <span>HP:${this.player.hp}/${this.player.maxHp}</span>
       <span>Str:${this.player.strength}</span>
       <span>Def:${this.player.armor}</span>
       <span>Exp:${this.player.exp}</span>
-      <span>Gold:${this.player.gold}</span>
+      <span>${goldLabel}:${this.player.gold}</span>
       ${hungerStatus ? `<span class="status-warning">${hungerStatus}</span>` : ''}
     `;
   }
