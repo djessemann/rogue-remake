@@ -29,31 +29,31 @@ export interface Monster {
   sleeping: boolean;
 }
 
-// Monster definitions - Bright saturated colors
+// Alien entity definitions - Bright saturated colors
 // HP increased by 20% from original values
 export const MONSTER_DEFS: Record<string, MonsterDef> = {
-  // Early game (Level 1-3)
-  B: { char: 'B', name: 'bat', color: '#ff44aa', hp: [1, 10], damage: '1d2', armor: 3, exp: 1, minLevel: 1, flags: ['erratic'] },
-  E: { char: 'E', name: 'emu', color: '#44ff44', hp: [1, 10], damage: '1d2', armor: 7, exp: 2, minLevel: 1, flags: [] },
-  H: { char: 'H', name: 'hobgoblin', color: '#ff8800', hp: [1, 10], damage: '1d8', armor: 5, exp: 3, minLevel: 1, flags: ['mean'] },
-  I: { char: 'I', name: 'ice monster', color: '#00ffff', hp: [1, 10], damage: '0d0', armor: 9, exp: 5, minLevel: 1, flags: ['freeze'] },
-  K: { char: 'K', name: 'kestrel', color: '#ffff00', hp: [1, 10], damage: '1d4', armor: 7, exp: 1, minLevel: 1, flags: ['erratic'] },
-  S: { char: 'S', name: 'snake', color: '#00ff00', hp: [1, 10], damage: '1d3', armor: 5, exp: 2, minLevel: 1, flags: ['mean'] },
+  // Dimensions 1-2: Entry-level entities
+  B: { char: 'B', name: 'blink moth', color: '#ff44aa', hp: [1, 10], damage: '1d2', armor: 3, exp: 1, minLevel: 1, flags: ['erratic'] },
+  E: { char: 'E', name: 'echo stalker', color: '#44ff44', hp: [1, 10], damage: '1d2', armor: 7, exp: 2, minLevel: 1, flags: [] },
+  H: { char: 'H', name: 'hiveling', color: '#ff8800', hp: [1, 10], damage: '1d8', armor: 5, exp: 3, minLevel: 1, flags: ['mean'] },
+  I: { char: 'I', name: 'ion specter', color: '#00ffff', hp: [1, 10], damage: '0d0', armor: 9, exp: 5, minLevel: 1, flags: ['freeze'] },
+  K: { char: 'K', name: 'kinetic sprite', color: '#ffff00', hp: [1, 10], damage: '1d4', armor: 7, exp: 1, minLevel: 1, flags: ['erratic'] },
+  S: { char: 'S', name: 'spine crawler', color: '#00ff00', hp: [1, 10], damage: '1d3', armor: 5, exp: 2, minLevel: 1, flags: ['mean'] },
 
-  // Mid game (Level 4-7)
-  O: { char: 'O', name: 'orc', color: '#00ff88', hp: [1, 10], damage: '1d8', armor: 6, exp: 5, minLevel: 4, flags: ['greedy'] },
-  R: { char: 'R', name: 'rattlesnake', color: '#88ff00', hp: [2, 10], damage: '1d6', armor: 3, exp: 9, minLevel: 4, flags: ['mean', 'drainStr'] },
-  Z: { char: 'Z', name: 'zombie', color: '#aa88ff', hp: [2, 10], damage: '1d8', armor: 8, exp: 6, minLevel: 5, flags: ['mean'] },
+  // Dimensions 3-4: Mid-tier entities
+  O: { char: 'O', name: 'obsidian hulk', color: '#00ff88', hp: [1, 10], damage: '1d8', armor: 6, exp: 5, minLevel: 3, flags: ['greedy'] },
+  R: { char: 'R', name: 'rift leech', color: '#88ff00', hp: [2, 10], damage: '1d6', armor: 3, exp: 9, minLevel: 3, flags: ['mean', 'drainStr'] },
+  Z: { char: 'Z', name: 'zero-point husk', color: '#aa88ff', hp: [2, 10], damage: '1d8', armor: 8, exp: 6, minLevel: 4, flags: ['mean'] },
 
-  // Late-mid game (Level 8-12)
-  A: { char: 'A', name: 'aquator', color: '#4488ff', hp: [2, 10], damage: '0d0', armor: 2, exp: 15, minLevel: 8, flags: ['mean', 'rustArmor'] },
-  T: { char: 'T', name: 'troll', color: '#00aa44', hp: [3, 10], damage: '2d6', armor: 4, exp: 25, minLevel: 8, flags: ['mean', 'regenerate'] },
-  P: { char: 'P', name: 'phantom', color: '#aa88cc', hp: [2, 10], damage: '1d8', armor: 3, exp: 20, minLevel: 10, flags: ['mean', 'invisible'] },
-  N: { char: 'N', name: 'nymph', color: '#ff88ff', hp: [2, 10], damage: '0d0', armor: 9, exp: 18, minLevel: 11, flags: ['stealItem'] },
+  // Dimensions 5-6: Dangerous entities
+  A: { char: 'A', name: 'acid jelly', color: '#4488ff', hp: [2, 10], damage: '0d0', armor: 2, exp: 15, minLevel: 5, flags: ['mean', 'rustArmor'] },
+  T: { char: 'T', name: 'titan polyp', color: '#00aa44', hp: [3, 10], damage: '2d6', armor: 4, exp: 25, minLevel: 5, flags: ['mean', 'regenerate'] },
+  P: { char: 'P', name: 'phase walker', color: '#aa88cc', hp: [2, 10], damage: '1d8', armor: 3, exp: 20, minLevel: 6, flags: ['mean', 'invisible'] },
+  N: { char: 'N', name: 'nanite swarm', color: '#ff88ff', hp: [2, 10], damage: '0d0', armor: 9, exp: 18, minLevel: 7, flags: ['stealItem'] },
 
-  // Late game (Level 13+)
-  V: { char: 'V', name: 'vampire', color: '#ff0044', hp: [3, 10], damage: '1d10', armor: 1, exp: 40, minLevel: 13, flags: ['mean', 'drainHP'] },
-  W: { char: 'W', name: 'wraith', color: '#888888', hp: [2, 10], damage: '1d6', armor: 4, exp: 35, minLevel: 15, flags: ['mean', 'drainXP', 'invisible'] },
+  // Dimensions 8-10: Apex predators
+  V: { char: 'V', name: 'void drinker', color: '#ff0044', hp: [3, 10], damage: '1d10', armor: 1, exp: 40, minLevel: 8, flags: ['mean', 'drainHP'] },
+  W: { char: 'W', name: 'warp specter', color: '#888888', hp: [2, 10], damage: '1d6', armor: 4, exp: 35, minLevel: 9, flags: ['mean', 'drainXP', 'invisible'] },
 };
 
 export function createMonster(def: MonsterDef, x: number, y: number, levelNum: number = 1): Monster {
@@ -63,8 +63,8 @@ export function createMonster(def: MonsterDef, x: number, y: number, levelNum: n
     hp += Math.floor(Math.random() * sides) + 1;
   }
 
-  // Depth scaling: monsters get +1 HP per 3 levels beyond their minLevel
-  const depthBonus = Math.floor((levelNum - def.minLevel) / 3);
+  // Dimension scaling: entities get +1 HP per 2 dimensions beyond their minLevel
+  const depthBonus = Math.floor((levelNum - def.minLevel) / 2);
   hp += depthBonus;
 
   return {

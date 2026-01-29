@@ -34,13 +34,13 @@ export function getTileChar(tile: Tile): string {
 
 export function getTileColor(tile: Tile): string {
   switch (tile.type) {
-    case 'floor': return '#8a9080';       // Mossy stone floor
-    case 'wall': return '#6d8a70';        // Living bark/wood - green-tinged
-    case 'corridor': return '#5a7a60';    // Branch passage - darker bark
-    case 'door': return '#7a9070';        // Bark door
-    case 'stairs_down': return '#70b890'; // Descending branches - leaf green
-    case 'stairs_up': return '#90d8b0';   // Ascending branches - bright leaf
-    case 'void': return '#0a1a10';        // Dark tree hollow
+    case 'floor': return '#8a9080';       // Pocket reality floor
+    case 'wall': return '#6d8a70';        // Reality membrane barrier
+    case 'corridor': return '#5a7a60';    // Dimensional tunnel
+    case 'door': return '#7a9070';        // Phase gate
+    case 'stairs_down': return '#70b890'; // Wormhole - forward rift
+    case 'stairs_up': return '#90d8b0';   // Wormhole - return rift
+    case 'void': return '#0a1a10';        // Dimensional void
     default: return '#7a8a78';
   }
 }

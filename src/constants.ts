@@ -24,19 +24,19 @@ export const TILES = {
   AMULET: '"',
 } as const;
 
-// Colors - World Tree theme
+// Colors - Interdimensional theme
 export const COLORS = {
-  FLOOR: '#8a9080',      // Mossy stone
-  WALL: '#6d8a70',       // Living bark
-  DOOR: '#7a9070',       // Bark door
-  STAIRS: '#90d8b0',     // Bright leaf green
-  PLAYER: '#f0f8e0',     // Soft white-green glow
-  GOLD: '#ffd700',       // Golden treasures
-  ITEM: '#e0b0ff',       // Soft violet
-  FOOD: '#d4a574',       // Warm amber (nuts/berries)
-  POTION: '#b0e0d0',     // Pale green-cyan
-  SCROLL: '#f0e8d0',     // Aged parchment
-  DEFAULT: '#a8b8a0',    // Muted green-gray
+  FLOOR: '#8a9080',      // Reality membrane floor
+  WALL: '#6d8a70',       // Dimensional barrier
+  DOOR: '#7a9070',       // Phase gate
+  STAIRS: '#90d8b0',     // Wormhole glow
+  PLAYER: '#f0f8e0',     // Traveler suit glow
+  GOLD: '#ffd700',       // Energy crystals
+  ITEM: '#e0b0ff',       // Tech item glow
+  FOOD: '#d4a574',       // Ration pack
+  POTION: '#b0e0d0',     // Compound canister
+  SCROLL: '#f0e8d0',     // Data chip
+  DEFAULT: '#a8b8a0',    // Default item
 } as const;
 
 // Directions (for movement)
