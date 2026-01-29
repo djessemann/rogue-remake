@@ -34,7 +34,7 @@ export class Display {
       fontFamily: fontStack,
       fontStyle: 'normal',
       forceSquareRatio: true,
-      bg: '#1a3020',
+      bg: '#000000',
     });
 
     const canvas = this.rotDisplay.getContainer() as HTMLCanvasElement;
