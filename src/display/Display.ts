@@ -136,6 +136,10 @@ export class Display {
     this.rotDisplay.clear();
   }
 
+  setBackgroundColor(color: string): void {
+    this.rotDisplay.setOptions({ bg: color });
+  }
+
   getContainer(): HTMLElement | null {
     return this.rotDisplay.getContainer();
   }

@@ -318,6 +318,7 @@ export function applyDimensionTheme(levelNum: number): void {
   const statusBar = document.getElementById('status-bar');
   const messageLog = document.getElementById('message-log');
   const controls = document.getElementById('controls');
+  const display = document.getElementById('display');
 
   if (gameContainer) {
     gameContainer.style.backgroundColor = palette.uiBg;
@@ -333,11 +334,20 @@ export function applyDimensionTheme(levelNum: number): void {
     controls.style.backgroundColor = palette.uiBg;
     controls.style.borderTopColor = palette.uiButtonBorder;
   }
+  if (display) {
+    display.style.backgroundColor = palette.uiBg;
+  }
 
   // Update the center dpad button separately (it has a special darker background)
   const centerBtn = document.querySelector('.dpad-btn.center') as HTMLElement;
   if (centerBtn) {
     // Make center button slightly darker than other buttons
     centerBtn.style.backgroundColor = palette.uiBg;
+  }
+
+  // Update canvas background if it exists
+  const canvas = display?.querySelector('canvas') as HTMLCanvasElement;
+  if (canvas) {
+    canvas.style.backgroundColor = palette.uiBg;
   }
 }
