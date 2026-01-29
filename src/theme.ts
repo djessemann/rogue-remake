@@ -227,12 +227,12 @@ export interface DimensionPalette {
 
 const dimensionPalettes: DimensionPalette[] = [
   {
-    name: 'Verdant Sprawl', floor: '#2d5a2d', wall: '#1a3d1a', corridor: '#1a3d1a', door: '#4a7a4a', stairs: '#90ee90',
-    uiBg: '#0a1a0a', uiButtonBg: '#1a2d1a', uiButtonBorder: '#2d5a2d', uiButtonActive: '#2a4a2a', uiMessageBg: '#0d200d'
-  },
-  {
     name: 'Crimson Wastes', floor: '#8b2500', wall: '#5c1a1a', corridor: '#5c1a1a', door: '#a04040', stairs: '#ff6b6b',
     uiBg: '#1a0a0a', uiButtonBg: '#2d1a1a', uiButtonBorder: '#5c2a2a', uiButtonActive: '#4a2a2a', uiMessageBg: '#200d0d'
+  },
+  {
+    name: 'Verdant Sprawl', floor: '#2d5a2d', wall: '#1a3d1a', corridor: '#1a3d1a', door: '#4a7a4a', stairs: '#90ee90',
+    uiBg: '#0a1a0a', uiButtonBg: '#1a2d1a', uiButtonBorder: '#2d5a2d', uiButtonActive: '#2a4a2a', uiMessageBg: '#0d200d'
   },
   {
     name: 'Frozen Void', floor: '#4a6a8a', wall: '#2a4a6a', corridor: '#2a4a6a', door: '#6a8aaa', stairs: '#a0e0f0',
