@@ -1,6 +1,7 @@
 import * as ROT from 'rot-js';
 import type { Level } from '../map/Level';
 import type { Player } from './Player';
+import { getThemedMonsterName } from '../theme';
 
 export interface MonsterDef {
   char: string;
@@ -72,7 +73,7 @@ export function createMonster(def: MonsterDef, x: number, y: number, levelNum: n
     y,
     char: def.char,
     color: def.color,
-    name: def.name,
+    name: getThemedMonsterName(def.char),
     hp,
     maxHp: hp,
     damage: def.damage,
