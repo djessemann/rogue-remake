@@ -984,7 +984,11 @@ export class Game {
         const key = `${x},${y}`;
         const isVisible = this.visible.has(key);
 
-        if (!tile.explored) continue;
+        if (!tile.explored) {
+          // Draw unexplored tiles with themed background color
+          this.display.drawWorld(x, y, ' ', bgColor, bgColor);
+          continue;
+        }
 
         // Check for items
         const items = this.level.getItems(x, y);
