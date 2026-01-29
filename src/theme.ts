@@ -217,19 +217,55 @@ export interface DimensionPalette {
   corridor: string;
   door: string;
   stairs: string;
+  // UI theming colors
+  uiBg: string;        // Background for game container
+  uiButtonBg: string;  // Button background color
+  uiButtonBorder: string; // Button border color
+  uiButtonActive: string; // Button active/pressed state
+  uiMessageBg: string; // Message log background
 }
 
 const dimensionPalettes: DimensionPalette[] = [
-  { name: 'Verdant Sprawl',  floor: '#2d5a2d', wall: '#1a3d1a', corridor: '#1a3d1a', door: '#4a7a4a', stairs: '#90ee90' },
-  { name: 'Crimson Wastes',  floor: '#8b2500', wall: '#5c1a1a', corridor: '#5c1a1a', door: '#a04040', stairs: '#ff6b6b' },
-  { name: 'Frozen Void',     floor: '#4a6a8a', wall: '#2a4a6a', corridor: '#2a4a6a', door: '#6a8aaa', stairs: '#a0e0f0' },
-  { name: 'Amber Hive',      floor: '#8b7500', wall: '#5c4a00', corridor: '#5c4a00', door: '#a08520', stairs: '#ffd700' },
-  { name: 'Violet Abyss',    floor: '#5a2d6a', wall: '#3a1a4a', corridor: '#3a1a4a', door: '#7a4d8a', stairs: '#da70d6' },
-  { name: 'Molten Core',     floor: '#8b4500', wall: '#5c2a00', corridor: '#5c2a00', door: '#a06520', stairs: '#ff8c00' },
-  { name: 'Silver Static',   floor: '#606068', wall: '#404048', corridor: '#404048', door: '#808088', stairs: '#c0c0c0' },
-  { name: 'Coral Depths',    floor: '#2a6a6a', wall: '#1a4a4a', corridor: '#1a4a4a', door: '#4a8a8a', stairs: '#40e0d0' },
-  { name: 'Golden Citadel',  floor: '#8b7a30', wall: '#5c5020', corridor: '#5c5020', door: '#a09040', stairs: '#ffd700' },
-  { name: 'White Rift',      floor: '#707080', wall: '#505060', corridor: '#505060', door: '#909098', stairs: '#e0e0f0' },
+  {
+    name: 'Verdant Sprawl', floor: '#2d5a2d', wall: '#1a3d1a', corridor: '#1a3d1a', door: '#4a7a4a', stairs: '#90ee90',
+    uiBg: '#0a1a0a', uiButtonBg: '#1a2d1a', uiButtonBorder: '#2d5a2d', uiButtonActive: '#2a4a2a', uiMessageBg: '#0d200d'
+  },
+  {
+    name: 'Crimson Wastes', floor: '#8b2500', wall: '#5c1a1a', corridor: '#5c1a1a', door: '#a04040', stairs: '#ff6b6b',
+    uiBg: '#1a0a0a', uiButtonBg: '#2d1a1a', uiButtonBorder: '#5c2a2a', uiButtonActive: '#4a2a2a', uiMessageBg: '#200d0d'
+  },
+  {
+    name: 'Frozen Void', floor: '#4a6a8a', wall: '#2a4a6a', corridor: '#2a4a6a', door: '#6a8aaa', stairs: '#a0e0f0',
+    uiBg: '#0a0a1a', uiButtonBg: '#1a2a3d', uiButtonBorder: '#2a4a6a', uiButtonActive: '#2a3a5a', uiMessageBg: '#0d1020'
+  },
+  {
+    name: 'Amber Hive', floor: '#8b7500', wall: '#5c4a00', corridor: '#5c4a00', door: '#a08520', stairs: '#ffd700',
+    uiBg: '#1a1400', uiButtonBg: '#2d2510', uiButtonBorder: '#5c4a00', uiButtonActive: '#4a3a10', uiMessageBg: '#201a08'
+  },
+  {
+    name: 'Violet Abyss', floor: '#5a2d6a', wall: '#3a1a4a', corridor: '#3a1a4a', door: '#7a4d8a', stairs: '#da70d6',
+    uiBg: '#100a14', uiButtonBg: '#2a1a3a', uiButtonBorder: '#4a2d5a', uiButtonActive: '#3a2a4a', uiMessageBg: '#180d20'
+  },
+  {
+    name: 'Molten Core', floor: '#8b4500', wall: '#5c2a00', corridor: '#5c2a00', door: '#a06520', stairs: '#ff8c00',
+    uiBg: '#1a0f00', uiButtonBg: '#2d1a0a', uiButtonBorder: '#5c3a1a', uiButtonActive: '#4a2a14', uiMessageBg: '#201408'
+  },
+  {
+    name: 'Silver Static', floor: '#606068', wall: '#404048', corridor: '#404048', door: '#808088', stairs: '#c0c0c0',
+    uiBg: '#101012', uiButtonBg: '#202028', uiButtonBorder: '#404048', uiButtonActive: '#303038', uiMessageBg: '#181820'
+  },
+  {
+    name: 'Coral Depths', floor: '#2a6a6a', wall: '#1a4a4a', corridor: '#1a4a4a', door: '#4a8a8a', stairs: '#40e0d0',
+    uiBg: '#0a1414', uiButtonBg: '#1a2d2d', uiButtonBorder: '#2a5050', uiButtonActive: '#2a4040', uiMessageBg: '#0d1a1a'
+  },
+  {
+    name: 'Golden Citadel', floor: '#8b7a30', wall: '#5c5020', corridor: '#5c5020', door: '#a09040', stairs: '#ffd700',
+    uiBg: '#141208', uiButtonBg: '#2d2810', uiButtonBorder: '#5c5020', uiButtonActive: '#4a4018', uiMessageBg: '#1a180c'
+  },
+  {
+    name: 'White Rift', floor: '#707080', wall: '#505060', corridor: '#505060', door: '#909098', stairs: '#e0e0f0',
+    uiBg: '#101018', uiButtonBg: '#20202a', uiButtonBorder: '#404050', uiButtonActive: '#303040', uiMessageBg: '#181820'
+  },
 ];
 
 // Classic theme uses static colors
@@ -240,6 +276,11 @@ const classicPalette: DimensionPalette = {
   corridor: '#c9a090',
   door: '#b0a090',
   stairs: '#a0e0f0',
+  uiBg: '#000000',
+  uiButtonBg: '#1a1a1a',
+  uiButtonBorder: '#444444',
+  uiButtonActive: '#2a2a2a',
+  uiMessageBg: '#0a0a0a',
 };
 
 // Get the palette for a given level number
@@ -259,4 +300,44 @@ export function getDimensionName(levelNum: number): string {
   }
   const palette = getDimensionPalette(levelNum);
   return `${palette.name} (Dimension ${levelNum})`;
+}
+
+// Apply dimension theme to UI elements
+export function applyDimensionTheme(levelNum: number): void {
+  const palette = getDimensionPalette(levelNum);
+  const root = document.documentElement;
+
+  // Update CSS custom properties
+  root.style.setProperty('--bg-color', palette.uiBg);
+  root.style.setProperty('--button-bg', palette.uiButtonBg);
+  root.style.setProperty('--button-border', palette.uiButtonBorder);
+  root.style.setProperty('--button-active', palette.uiButtonActive);
+
+  // Update specific elements that use hardcoded colors
+  const gameContainer = document.getElementById('game-container');
+  const statusBar = document.getElementById('status-bar');
+  const messageLog = document.getElementById('message-log');
+  const controls = document.getElementById('controls');
+
+  if (gameContainer) {
+    gameContainer.style.backgroundColor = palette.uiBg;
+  }
+  if (statusBar) {
+    statusBar.style.backgroundColor = palette.uiBg;
+  }
+  if (messageLog) {
+    messageLog.style.backgroundColor = palette.uiMessageBg;
+    messageLog.style.borderTopColor = palette.uiButtonBorder;
+  }
+  if (controls) {
+    controls.style.backgroundColor = palette.uiBg;
+    controls.style.borderTopColor = palette.uiButtonBorder;
+  }
+
+  // Update the center dpad button separately (it has a special darker background)
+  const centerBtn = document.querySelector('.dpad-btn.center') as HTMLElement;
+  if (centerBtn) {
+    // Make center button slightly darker than other buttons
+    centerBtn.style.backgroundColor = palette.uiBg;
+  }
 }

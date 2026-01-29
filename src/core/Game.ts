@@ -17,7 +17,7 @@ import { ControlPad, type Direction, type Action } from '../input/ControlPad';
 import { KeyboardInput } from '../input/KeyboardInput';
 import { playerAttack, monsterAttack } from '../systems/Combat';
 import { DIRECTIONS, COLS, MAP_ROWS } from '../constants';
-import { currentTheme, getDimensionName } from '../theme';
+import { currentTheme, getDimensionName, applyDimensionTheme } from '../theme';
 
 export class Game {
   private display: Display;
@@ -77,6 +77,9 @@ export class Game {
 
     // Add welcome message
     this.addMessage(`Welcome to ${currentTheme.name}!`);
+
+    // Apply initial dimension theme to UI
+    applyDimensionTheme(this.currentLevelNum);
 
     // Initial render
     this.computeFOV();
@@ -426,6 +429,9 @@ export class Game {
     this.fov = new ROT.FOV.PreciseShadowcasting((x, y) => {
       return this.level.isTransparent(x, y);
     });
+
+    // Apply dimension theme to UI
+    applyDimensionTheme(this.currentLevelNum);
 
     this.computeFOV();
     this.render();
@@ -924,6 +930,9 @@ export class Game {
 
     // Welcome message
     this.addMessage(`Welcome to ${currentTheme.name}!`);
+
+    // Apply dimension theme to UI
+    applyDimensionTheme(this.currentLevelNum);
 
     // Render
     this.computeFOV();
